@@ -1,0 +1,27 @@
+{
+  "name": "outsmart_gem",
+  "version": "1.0.0",
+  "description": "Generative AI has unlocked a bunch of new potential for engaging games. Our application is a suite of AI games to bring engaging and delightful experiences to all users.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/client": "^3.12.4",
+    "axios": "^1.7.9",
+    "bulma": "^1.0.2",
+    "graphql": "^16.10.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "@types/react-router-dom": "^5.3.3",
+    "typescript": "^5.7.2"
+  }
+}
