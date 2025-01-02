@@ -6,6 +6,8 @@
     "module": "ESNext" /* Specify what module code is generated. */,
     "moduleResolution": "Bundler" /* Specify how TypeScript looks up a file from a given module specifier. */,
     "skipLibCheck": true,
+    "rootDir": "src" /* Specify the root folder within your source files. */,
+    "outDir": "dist" /* Specify an output folder for all emitted files. */,
     /* JavaScript Support */
     "allowJs": true /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */,
     "checkJs": true /* Enable error reporting in type-checked JavaScript files. */,
@@ -22,5 +24,8 @@
     "noImplicitReturns": true /* Enable error reporting for codepaths that do not explicitly return in a function. */,
     "noImplicitOverride": true /* Ensure overriding members in derived classes are marked with an override modifier. */,
     "useUnknownInCatchVariables": true /* Ensure 'unknown' is used for catch clause variables. */
-  }
+  },
+  "include": [
+    "src"
+  ]
 }

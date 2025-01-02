@@ -1,27 +1,25 @@
 {
-  "name": "outsmart_gem",
+  "name": "main",
   "version": "1.0.0",
-  "description": "Generative AI has unlocked a bunch of new potential for engaging games. Our application is a suite of AI games to bring engaging and delightful experiences to all users.",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server/server.js",
+    "start:dev": "concurrently \"cd server && npm run watch\" \"wait-on tcp:3001 && cd client && npm run dev\"",
+    "server": "cd server && npm start",
+    "server:dev": "cd server && npm run dev",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "client:build": "cd client && npm run build",
+    "client:dev": "cd client && npm run dev",
+    "seed": "cd server && npm run seed",
+    "build": "concurrently \"cd server && npm run build\" \"cd client && npm run build\"",
+    "render-build": "npm install && npm run build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@apollo/client": "^3.12.4",
-    "axios": "^1.7.9",
-    "bulma": "^1.0.2",
-    "graphql": "^16.10.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-router-dom": "^7.1.1"
-  },
   "devDependencies": {
-    "@types/react": "^19.0.2",
-    "@types/react-dom": "^19.0.2",
-    "@types/react-router-dom": "^5.3.3",
-    "typescript": "^5.7.2"
+    "concurrently": "^8.2.2",
+    "wait-on": "^7.2.0"
   }
 }
