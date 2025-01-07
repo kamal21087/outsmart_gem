@@ -1,5 +1,5 @@
-import { Navigate, useParams } from 'react-router-dom';
-import Auth from '../utils/auth';
+// import { Navigate, useParams } from 'react-router-dom';
+// import Auth from '../utils/auth';
 
 import { useMutation } from '@apollo/client';
 import { useState, useEffect } from 'react';
@@ -7,7 +7,8 @@ import { useState, useEffect } from 'react';
 import { ASK_GEMINI } from '../utils/mutations';
 
 const GuessWhoGame = () => {
-  const baseText = `We are playing a Guess Who game with the final answer being 'panda'. You should answer with a yes/no response. `;
+  // GEMINI comes up with final answer
+  // const baseText = `We are playing a Guess Who game with the final answer being 'final_answer'. You should answer with a yes/no response. `;
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [guesses, setGuess] = useState(20);
@@ -17,7 +18,7 @@ const GuessWhoGame = () => {
 
   const handleAsk = async () => {
     try {
-      setQuestionList([...questionList, question]);
+        setQuestionList([...questionList, question]);
         const { data } = await askGemini({
             variables: { question },
         });
@@ -32,6 +33,7 @@ const GuessWhoGame = () => {
     setGuess(20);
     setQuestionList([]);
     setAnswerList([]);
+    // send game log to server
   };
 
   useEffect(() => {
