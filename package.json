@@ -23,6 +23,7 @@
     "wait-on": "^7.2.0"
   },
   "dependencies": {
+    "bulma": "^1.0.3",
     "mongoose": "^8.9.3"
   }
 }

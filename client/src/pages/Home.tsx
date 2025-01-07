@@ -1,34 +1,33 @@
-import { useQuery } from '@apollo/client';
-
-import ThoughtList from '../components/ThoughtList/index.tsx';
-import ThoughtForm from '../components/ThoughtForm/index.tsx';
-
-import { QUERY_THOUGHTS } from '../utils/queries.ts';
+import './Home.css'; // Custom styles for hover effects.
 
 const Home = () => {
-  const { loading, data } = useQuery(QUERY_THOUGHTS);
-  const thoughts = data?.thoughts || [];
-
   return (
     <main>
-      <div className="flex-row justify-center">
-        <div
-          className="col-12 col-md-10 mb-3 p-3"
-          style={{ border: '1px dotted #1a1a1a' }}
-        >
-          <ThoughtForm />
+      {/* Main Section */}
+      <section className="section">
+        <div className="container">
+          {/* Welcome Message */}
+          <h1 className="welcome-message">Welcome to OutSmart Gem</h1>
+
+          {/* Game Boxes */}
+          <div className="game-boxes">
+            {/* Game Box 1 */}
+            <div className="game-box">
+              <p>GUESS WHO</p>
+            </div>
+
+            {/* Game Box 2 */}
+            <div className="game-box">
+              <p>STORYTELLER</p>
+            </div>
+
+            {/* Game Box 3 */}
+            <div className="game-box">
+              <p>IDENTIFY THE AI</p>
+            </div>
+          </div>
         </div>
-        <div className="col-12 col-md-8 mb-3">
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
-            <ThoughtList
-              thoughts={thoughts}
-              title="Some Feed for Thought(s)..."
-            />
-          )}
-        </div>
-      </div>
+      </section>
     </main>
   );
 };
