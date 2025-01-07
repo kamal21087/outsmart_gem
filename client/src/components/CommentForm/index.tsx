@@ -1,6 +1,5 @@
 import { useState, type FormEvent, type ChangeEvent } from 'react';
 import { useMutation } from '@apollo/client';
-import 'bulma/css/bulma.min.css';
 
 import { ADD_COMMENT } from '../../utils/mutations';
 
