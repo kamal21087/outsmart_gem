@@ -7,6 +7,9 @@ import { expressMiddleware } from '@apollo/server/express4';
 import { typeDefs, resolvers } from './schemas/index.js';
 import { authenticateToken } from './utils/auth.js';
 
+console.log('Loaded TypeDefs:', typeDefs);
+console.log('Loaded Mutation Resolvers:', resolvers.Mutation);
+
 const server = new ApolloServer({
   typeDefs,
   resolvers

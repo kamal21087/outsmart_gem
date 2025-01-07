@@ -7,6 +7,8 @@ interface IUser extends Document {
   email: string;
   password: string;
   thoughts: Schema.Types.ObjectId[];
+  wins: number;
+  losses: number;
   isCorrectPassword(password: string): Promise<boolean>;
 }
 
@@ -36,6 +38,14 @@ const userSchema = new Schema<IUser>(
         ref: 'Thought',
       },
     ],
+    wins: {
+      type: Number,
+      default: 0,
+    },
+    losses: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server/dist/server.js",
-    "start:dev": "concurrently \"cd server && npm run watch\" \"wait-on tcp:3001 && cd client && npm run dev\"",
+    "start": "node server/server.js",
+    "start:dev": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "server": "cd server && npm start",
     "server:dev": "cd server && npm run dev",
     "install": "cd server && npm i && cd ../client && npm i",
@@ -23,10 +23,7 @@
     "wait-on": "^7.2.0"
   },
   "dependencies": {
-<<<<<<< HEAD
+    "mongoose": "^8.9.3",
     "dotenv": "^16.4.7"
-=======
-    "mongoose": "^8.9.3"
->>>>>>> 5ef1644f5bda12b87b662d0f4dbbb0c71ab8f638
   }
 }

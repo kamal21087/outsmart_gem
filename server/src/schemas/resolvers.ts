@@ -1,5 +1,11 @@
-import { Thought, User } from '../models/index.js';
-import { signToken, AuthenticationError } from '../utils/auth.js'; 
+import { Thought, User, Gamelog } from '../models/index.js';
+import { signToken, AuthenticationError } from '../utils/auth.js';
+import axios from 'axios';
+
+import dotenv from 'dotenv';
+dotenv.config();
+
+import formatQuestion from '../utils/formatQuestion.js';
 
 // Define types for the arguments
 interface AddUserArgs {
@@ -28,6 +34,15 @@ interface AddThoughtArgs {
     thoughtText: string;
     thoughtAuthor: string;
   }
+}
+
+interface AddGamelogArgs {
+  input: {
+    userQuestions: [string];
+    aiResponses: [string];
+    results: string;
+    score: number;
+  };
 }
 
 interface AddCommentArgs {
@@ -100,6 +115,33 @@ const resolvers = {
       // Return the token and the user
       return { token, user };
     },
+    askGemini: async (_parent: any, question: String) => {
+      try {
+        const apiKey = process.env.GEMINI_API_KEY;
+        const formattedQuestion = formatQuestion(question);
+        const response = await axios.post(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+          formattedQuestion,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        const text = response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!text) {
+          throw new Error('Failed to extract text from API response.');
+        }
+        return text.trim();
+      } catch (error: any) {
+          if (error.response) {
+            console.error('Gemini API error response:', error.response.data);
+          } else {
+            console.error('Error asking Gemini:', error.message);
+          }
+          throw new Error('Failed to send data to the external API.');
+      }
+    },
     addThought: async (_parent: any, { input }: AddThoughtArgs, context: any) => {
       if (context.user) {
         const thought = await Thought.create({ ...input });
@@ -113,6 +155,30 @@ const resolvers = {
       }
       throw AuthenticationError;
       ('You need to be logged in!');
+    },
+    addGamelog: async (_parent: any, { input }: AddGamelogArgs, context: any) => {
+      if (context.user) {
+        // Create the game log entry
+        const gamedata = await Gamelog.create({ ...input, playerId: context.user._id });
+    
+        // Extract score and result from input
+        const { score, results } = input;
+    
+        // Update user data
+        const update = {
+          $inc: {
+            cumulativeScore: score || 0,
+            wins: results === 'W' ? 1 : 0,
+            losses: results === 'L' ? 1 : 0,
+          },
+        };
+    
+        // Update the user in the database
+        await User.findOneAndUpdate({ _id: context.user._id }, update, { new: true });
+    
+        return gamedata;
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
     addComment: async (_parent: any, { thoughtId, commentText }: AddCommentArgs, context: any) => {
       if (context.user) {

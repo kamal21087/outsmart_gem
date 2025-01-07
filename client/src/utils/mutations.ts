@@ -54,3 +54,9 @@ export const ADD_COMMENT = gql`
     }
   }
 `;
+
+export const ASK_GEMINI = gql`
+  mutation AskGemini($question: String!) {
+    askGemini(question: $question)
+  }
+`;
