@@ -23,6 +23,10 @@
     "wait-on": "^7.2.0"
   },
   "dependencies": {
+<<<<<<< HEAD
     "dotenv": "^16.4.7"
+=======
+    "mongoose": "^8.9.3"
+>>>>>>> 5ef1644f5bda12b87b662d0f4dbbb0c71ab8f638
   }
 }
