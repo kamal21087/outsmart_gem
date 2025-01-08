@@ -1,10 +1,10 @@
-const typeDefs = `
+const typeDefs = `#graphql
   type User {
     _id: ID
     username: String
     email: String
     password: String
-    thoughts: [Thought]!
+    accountCreated: String!
   }
 
   type Gamelog {
@@ -15,24 +15,15 @@ const typeDefs = `
     results: String!
     score: Int!
   }
-
-  type Thought {
-    _id: ID
-    thoughtText: String
-    thoughtAuthor: String
-    createdAt: String
-    comments: [Comment]!
-  }
-
-  type Comment {
-    _id: ID
-    commentText: String
-    createdAt: String
-  }
-
-  input ThoughtInput {
-    thoughtText: String!
-    thoughtAuthor: String!
+  
+  type UserProfile { 
+  profileImage: String! 
+  lastPlayed: String! 
+  overallScore: Int! 
+  totalWins: Int! 
+  totalLoss: Int! 
+  highScore: Int! 
+  playerRank: Int! 
   }
 
   input UserInput {
@@ -56,21 +47,18 @@ const typeDefs = `
   type Query {
     users: [User]
     user(username: String!): User
-    thoughts: [Thought]!
-    thought(thoughtId: ID!): Thought
     askGuessWhoGemini(question: String!): String!
     me: User
+    getUserProfile(userName: String!): UserProfile 
+    getUserData(userName: String!): User
   }
 
   type Mutation {
     addUser(input: UserInput!): Auth
     login(email: String!, password: String!): Auth
-    addThought(input: ThoughtInput!): Thought
-    addComment(thoughtId: ID!, commentText: String!): Thought
-    removeThought(thoughtId: ID!): Thought
-    removeComment(thoughtId: ID!, commentId: ID!): Thought
     askGemini(question: String!): String!
     addGamelog(input: AddGamelogInput!): Gamelog
+    updateProfileImage(userName: String!, profileImage: String!): UserProfile
   }
 `;
 

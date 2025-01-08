@@ -1,60 +1,29 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_USER = gql`
-  query user($username: String!) {
-    user(username: $username) {
-      _id
+// Define the GraphQL query to get the user profile
+export const GET_USER_PROFILE = gql`
+  query getUserProfile($userName: String!) {
+    getUserProfile(userName: $userName) {
+      profileImage
+      lastPlayed
+      overallScore
+      totalWins
+      totalLoss
+      highScore
+      playerRank
+    }
+  }
+`;
+
+// Define the GraphQL query to get the user data
+export const GET_USER_DATA = gql`
+  query getUserData($userName: String!) {
+    getUserData(userName: $userName) {
+      id
       username
       email
-      thoughts {
-        _id
-        thoughtText
-        createdAt
-      }
+      accountCreated
     }
   }
 `;
 
-export const QUERY_THOUGHTS = gql`
-  query getThoughts {
-    thoughts {
-      _id
-      thoughtText
-      thoughtAuthor
-      createdAt
-    }
-  }
-`;
-
-export const QUERY_SINGLE_THOUGHT = gql`
-  query getSingleThought($thoughtId: ID!) {
-    thought(thoughtId: $thoughtId) {
-      _id
-      thoughtText
-      thoughtAuthor
-      createdAt
-      comments {
-        _id
-        commentText
-        commentAuthor
-        createdAt
-      }
-    }
-  }
-`;
-
-export const QUERY_ME = gql`
-  query me {
-    me {
-      _id
-      username
-      email
-      thoughts {
-        _id
-        thoughtText
-        thoughtAuthor
-        createdAt
-      }
-    }
-  }
-`;

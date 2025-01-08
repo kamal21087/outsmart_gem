@@ -1,0 +1,48 @@
+/* Welcome Message */
+.welcome-message {
+  font-family: 'Bangers', cursive; /* Custom Bangers font */
+  font-size: 3rem; /* Larger text for emphasis */
+  text-align: center;
+  color: #1a1a1a; /* Black text color */
+  margin-bottom: 2rem; /* Space below the message */
+}
+
+/* Game Boxes Container */
+.game-boxes {
+  display: flex;
+  flex-direction: column; /* Stack game boxes vertically */
+  align-items: center;
+  gap: 2rem; /* Space between boxes */
+}
+
+/* Game Boxes */
+.game-box {
+  background-color: #defc99; /* Default box color */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  font-weight: bold;
+  padding: 30px 50px; /* Adds more padding for a rectangular shape */
+  border-radius: 8px; /* Rounds the edges for a modern look */
+  width: 80%; /* Makes boxes take 80% of the container width */
+  max-width: 400px; /* Caps the maximum width */
+}
+
+.game-box:hover {
+  background-color: #b5f77d; /* Light Green on hover */
+}
+
+.game-box p {
+  margin: 0;
+  font-size: 1.5rem; /* Slightly larger text */
+  color: #000000; /* Black text */
+}
+
+/* Footer */
+.footer {
+  background-color: #e0e0e0; /* Gray background */
+  color: #000000; /* Black text */
+  text-align: center;
+  padding: 0.5rem 0; /* Smaller footer height */
+  font-size: 0.75rem; /* Smaller text */
+}

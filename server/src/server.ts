@@ -7,8 +7,11 @@ import { expressMiddleware } from '@apollo/server/express4';
 import { typeDefs, resolvers } from './schemas/index.js';
 import { authenticateToken } from './utils/auth.js';
 
-console.log('Loaded TypeDefs:', typeDefs);
-console.log('Loaded Mutation Resolvers:', resolvers.Mutation);
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const server = new ApolloServer({
   typeDefs,
@@ -24,6 +27,8 @@ const startApolloServer = async () => {
 
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
+  // Serve static files from the public directory 
+  app.use(express.static(path.join(__dirname, '..', 'public')));
 
   app.use('/graphql', expressMiddleware(server as any,
     {

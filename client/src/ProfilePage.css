@@ -1,0 +1,38 @@
+.profile-page {
+  padding: 20px;
+}
+
+.profile-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-image img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.image-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.image-options img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.profile-info .title {
+  margin-bottom: 10px;
+}
+
+.button {
+  margin-top: 10px;
+}

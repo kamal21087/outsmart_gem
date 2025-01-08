@@ -1,12 +1,12 @@
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import 'bulma/css/bulma.min.css';
 
 
 import App from './App.jsx';
 import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import SingleThought from './pages/SingleThought';
 import Profile from './pages/Profile';
 import ErrorPage from './pages/Error';
 
@@ -31,9 +31,6 @@ const router = createBrowserRouter([
       }, {
         path: '/me',
         element: <Profile />
-      }, {
-        path: '/thoughts/:thoughtId',
-        element: <SingleThought />
       }
     ]
   },

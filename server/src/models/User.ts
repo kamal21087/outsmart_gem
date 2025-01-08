@@ -1,14 +1,12 @@
 import { Schema, model, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
 
-// Define an interface for the User document
+// Interface defining the structure of user data in the database
 interface IUser extends Document {
   username: string;
   email: string;
   password: string;
-  thoughts: Schema.Types.ObjectId[];
-  wins: number;
-  losses: number;
+  accountCreated: Date;
   isCorrectPassword(password: string): Promise<boolean>;
 }
 
@@ -32,19 +30,9 @@ const userSchema = new Schema<IUser>(
       required: true,
       minlength: 5,
     },
-    thoughts: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Thought',
-      },
-    ],
-    wins: {
-      type: Number,
-      default: 0,
-    },
-    losses: {
-      type: Number,
-      default: 0,
+    accountCreated: { 
+      type: Date, 
+      required: true 
     },
   },
   {

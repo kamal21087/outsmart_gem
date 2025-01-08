@@ -23,7 +23,8 @@
     "wait-on": "^7.2.0"
   },
   "dependencies": {
-    "mongoose": "^8.9.3",
-    "dotenv": "^16.4.7"
+    "bulma": "^1.0.3",
+    "dotenv": "^16.4.7",
+    "mongoose": "^8.9.3"
   }
 }
