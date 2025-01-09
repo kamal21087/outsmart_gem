@@ -1,0 +1,130 @@
+/* General Page Styles */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #ffffff; /* White background */
+  padding: 1rem;
+}
+
+.welcome-message {
+  font-family: 'Bangers', cursive; /* Custom font for the title */
+  font-size: 3rem;
+  color: #1a1a1a; /* Dark text */
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Form Styles */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* Space between form groups */
+  width: 100%;
+  max-width: 400px; /* Limit form width */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* Space between label and input */
+  align-items: center; /* Center the labels and inputs */
+}
+
+.form-label {
+  font-family: 'Open Sans', sans-serif; /* Custom font for labels */
+  font-size: 1rem;
+  font-weight: bold;
+  color: #1a1a1a;
+  text-align: center;
+}
+
+.username-container,
+.password-container {
+  display: flex;
+  align-items: center; /* Align input and button vertically */
+  justify-content: space-between; /* Ensure inputs take up space */
+  position: relative; /* Required for absolute positioning in password-container */
+  width: 100%; /* Ensure container spans the full width */
+  max-width: 400px; /* Match form width */
+}
+
+.username-container .form-input,
+.password-container .form-input {
+  flex: 1; /* Inputs take up full available width */
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  padding: 0.75rem;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Includes padding in width */
+}
+
+.form-input:focus {
+  border-color: #1a89bc; /* Blue border on focus */
+  box-shadow: 0 0 5px rgba(26, 137, 188, 0.5); /* Subtle glow effect */
+}
+
+/* Submit Button */
+.btn-submit {
+  position: absolute; /* Position relative to the password-container */
+  top: 50%; /* Vertically center */
+  right: -60px; /* Move slightly outside the container */
+  transform: translateY(-50%); /* Adjust for exact vertical centering */
+  background-color: #defc99; /* Light green background */
+  border: 2px solid black; /* Black border */
+  padding: 0.5rem;
+  border-radius: 8px; /* Rounded corners */
+  font-size: 1.25rem; /* Adjust font size for the arrow */
+  font-family: Arial, sans-serif; /* Font for the arrow */
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Match the height of the input field */
+}
+
+.btn-submit:hover {
+  background-color: #b5f77d; /* Darker green on hover */
+  transform: translateY(-50%) scale(1.1); /* Slightly enlarge on hover */
+}
+
+.btn-submit:active {
+  background-color: #9dd867; /* Even darker green on click */
+  transform: translateY(-50%) scale(0.95); /* Slightly shrink on click */
+}
+
+/* Signup Link */
+.signup-link {
+  margin-top: 1rem;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.875rem;
+  color: #1a1a1a;
+  text-align: center;
+}
+
+.signup-link .link {
+  color: #1a89bc; /* Link color */
+  text-decoration: none;
+}
+
+.signup-link .link:hover {
+  text-decoration: underline; /* Underline link on hover */
+}
+
+/* Error Message */
+.error-message {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background-color: #e64c66;
+  color: #ffffff;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.875rem;
+  text-align: center;
+  border-radius: 4px;
+}

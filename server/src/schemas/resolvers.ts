@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from ‘axios’;
 
-import dotenv from 'dotenv';
+import dotenv from ‘dotenv’;
+
 dotenv.config();
-
-import formatQuestion from '../utils/formatQuestion.js';
-import { User, Gamelog, UserProfile } from '../models/index.js';
-import { signToken, AuthenticationError } from '../utils/auth.js'; 
+import formatQuestion from ‘../utils/formatQuestion.js’;
+import { User, Gamelog, UserProfile } from ‘../models/index.js’;
+import { signToken, AuthenticationError } from ‘../utils/auth.js’;
 
 // Define types for the arguments
 interface AddUserArgs {
@@ -33,48 +33,46 @@ interface LoginUserArgs {
 // GraphQL resolvers for handling queries and mutations
 const resolvers = {
   Query: {
-    // Query to get the authenticated user's information
-    // The 'me' query relies on the context to check if the user is authenticated
+    // Query to get the authenticated user’s information
+    // The ‘me’ query relies on the context to check if the user is authenticated
     me: async (_parent: any, _args: any, context: any) => {
-      // If the user is authenticated, find and return the user's information along with their thoughts
+      // If the user is authenticated, find and return the user’s information along with their thoughts
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('thoughts');
+        return User.findOne({ _id: context.user._id }).populate(‘thoughts’);
       }
       // If the user is not authenticated, throw an AuthenticationError
-      throw new AuthenticationError('Could not authenticate user.');
+      throw new AuthenticationError(‘Could not authenticate user.’);
     },
-
+    
     // Resolver for fetching user profile
     getUserProfile: async (_: any, { userName }: { userName: string }) => {
       try {
         const userProfile = await UserProfile.findOne({ userName });
         return userProfile;
       } catch (error) {
-        console.error('Error fetching user profile:', error);
-        throw new Error('Error fetching user profile');
+        console.error(‘Error fetching user profile:’, error);
+        throw new Error(‘Error fetching user profile’);
       }
     },
-
+    
     // Resolver for fetching user data
     getUserData: async (_: any, { userName }: { userName: string }) => {
       try {
         const userData = await User.findOne({ userName });
         return userData;
       } catch (error) {
-        console.error('Error fetching user data:', error);
-        throw new Error('Error fetching user data');
+        console.error(‘Error fetching user data:’, error);
+        throw new Error(‘Error fetching user data’);
       }
     },
   },
-
+  
   Mutation: {
     addUser: async (_parent: any, { input }: AddUserArgs) => {
       // Create a new user with the provided username, email, and password
       const user = await User.create({ ...input });
-    
-      // Sign a token with the user's information
+      // Sign a token with the user’s information
       const token = signToken(user.username, user.email, user._id);
-    
       // Return the token and the user
       return { token, user };
     },
@@ -82,26 +80,22 @@ const resolvers = {
     login: async (_parent: any, { email, password }: LoginUserArgs) => {
       // Find a user with the provided email
       const user = await User.findOne({ email });
-    
       // If no user is found, throw an AuthenticationError
       if (!user) {
-        throw new AuthenticationError('Could not authenticate user.');
+        throw new AuthenticationError(’Could not authenticate user.’);
       }
-    
       // Check if the provided password is correct
       const correctPw = await user.isCorrectPassword(password);
-    
       // If the password is incorrect, throw an AuthenticationError
       if (!correctPw) {
-        throw new AuthenticationError('Could not authenticate user.');
+        throw new AuthenticationError(’Could not authenticate user.’);
       }
-    
-      // Sign a token with the user's information
+      // Sign a token with the user’s information
       const token = signToken(user.username, user.email, user._id);
-    
       // Return the token and the user
       return { token, user };
     },
+    
     askGemini: async (_parent: any, question: String) => {
       try {
         const apiKey = process.env.GEMINI_API_KEY;
@@ -111,48 +105,46 @@ const resolvers = {
           formattedQuestion,
           {
             headers: {
-              'Content-Type': 'application/json',
+              ‘Content-Type’: ‘application/json’,
             },
           }
         );
         const text = response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
         if (!text) {
-          throw new Error('Failed to extract text from API response.');
+          throw new Error(‘Failed to extract text from API response.’);
         }
         return text.trim();
       } catch (error: any) {
           if (error.response) {
-            console.error('Gemini API error response:', error.response.data);
+            console.error(‘Gemini API error response:’, error.response.data);
           } else {
-            console.error('Error asking Gemini:', error.message);
+            console.error(‘Error asking Gemini:’, error.message);
           }
-          throw new Error('Failed to send data to the external API.');
+          throw new Error(‘Failed to send data to the external API.‘);
       }
     },
+    
     addGamelog: async (_parent: any, { input }: AddGamelogArgs, context: any) => {
       if (context.user) {
         // Create the game log entry
         const gamedata = await Gamelog.create({ ...input, playerId: context.user._id });
-    
         // Extract score and result from input
         const { score, results } = input;
-    
         // Update user data
         const update = {
           $inc: {
             cumulativeScore: score || 0,
-            wins: results === 'W' ? 1 : 0,
-            losses: results === 'L' ? 1 : 0,
+            wins: results === ‘W’ ? 1 : 0,
+            losses: results === ‘L’ ? 1 : 0,
           },
         };
-    
         // Update the user in the database
         await User.findOneAndUpdate({ _id: context.user._id }, update, { new: true });
-    
         return gamedata;
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError(‘You need to be logged in!’);
     },
+    
     // Resolver for updating profile image
     updateProfileImage: async (_: any, { userName, profileImage }: { userName: string, profileImage: string }) => {
       try {
@@ -163,12 +155,11 @@ const resolvers = {
         );
         return userProfile;
       } catch (error) {
-        console.error('Error updating profile image:', error);
-        throw new Error('Error updating profile image');
+        console.error(‘Error updating profile image:’, error);
+        throw new Error(‘Error updating profile image’);
       }
     },
   },
 };
 
 export default resolvers;
-
