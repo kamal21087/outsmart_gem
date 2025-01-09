@@ -6,6 +6,15 @@ const typeDefs = `#graphql
     password: String
     accountCreated: String!
   }
+
+  type Gamelog {
+    _id: ID
+    username: String!
+    userQuestions: [String]
+    aiResponses: [String]
+    results: String!
+    score: Int!
+  }
   
   type UserProfile { 
   profileImage: String! 
@@ -22,6 +31,13 @@ const typeDefs = `#graphql
     email: String!
     password: String!
   }
+
+  input AddGamelogInput {
+    userQuestions: [String]
+    aiResponses: [String]
+    results: String!
+    score: Int!
+  }
   
   type Auth {
     token: ID!
@@ -31,6 +47,7 @@ const typeDefs = `#graphql
   type Query {
     users: [User]
     user(username: String!): User
+    askGuessWhoGemini(question: String!): String!
     me: User
     getUserProfile(userName: String!): UserProfile 
     getUserData(userName: String!): User
@@ -39,6 +56,8 @@ const typeDefs = `#graphql
   type Mutation {
     addUser(input: UserInput!): Auth
     login(email: String!, password: String!): Auth
+    askGemini(question: String!): String!
+    addGamelog(input: AddGamelogInput!): Gamelog
     updateProfileImage(userName: String!, profileImage: String!): UserProfile
   }
 `;
