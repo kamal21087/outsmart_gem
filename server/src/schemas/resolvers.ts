@@ -61,6 +61,14 @@ const resolvers = {
         throw new Error('Error fetching user data');
       }
     },
+
+    // Resolver for getting current user avatar
+    getUserAvatar: async (_parent: any, _args: any, context: any) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id }).populate('profileImage');
+      }
+      throw new AuthenticationError('Could not authenticate user.');
+    },
   },
 
   Mutation: {
