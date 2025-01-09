@@ -4,7 +4,7 @@ import { UserProfile } from '../interfaces/UserProfile';
 import { UserData } from '../interfaces/UserData';
 import { GET_USER_PROFILE, GET_USER_DATA } from '../utils/queries';
 import { UPDATE_PROFILE_IMAGE } from '../utils/mutations';
-import '../ProfilePage.css'; // Import your custom CSS
+import './ProfilePage.css'; // Import your custom CSS
 import AuthService from '../utils/auth'; 
 
 // Component for rendering the profile page
