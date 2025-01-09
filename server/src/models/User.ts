@@ -7,9 +7,6 @@ interface IUser extends Document {
   email: string;
   password: string;
   accountCreated: Date;
-  thoughts: Schema.Types.ObjectId[];
-  wins: number;
-  losses: number;
   isCorrectPassword(password: string): Promise<boolean>;
 }
 
@@ -36,27 +33,14 @@ const userSchema = new Schema<IUser>(
     accountCreated: { 
       type: Date, 
       required: true 
-    thoughts: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Thought',
-      },
-    ],
-    wins: {
-      type: Number,
-      default: 0,
-    },
-    losses: {
-      type: Number,
-      default: 0,
     },
   },
-  {
+
+    {
     timestamps: true,
     toJSON: { getters: true },
     toObject: { getters: true },
-  }
-);
+    });
 
 userSchema.pre<IUser>('save', async function (next) {
   if (this.isNew || this.isModified('password')) {
