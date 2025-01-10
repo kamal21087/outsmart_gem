@@ -51,6 +51,7 @@ const typeDefs = `#graphql
     me: User
     getUserProfile(userName: String!): UserProfile 
     getUserData(userName: String!): User
+    getUserAvatar: String!
   }
 
   type Mutation {

@@ -61,6 +61,14 @@ const resolvers = {
         throw new Error('Error fetching user data');
       }
     },
+
+    // Resolver for getting current user avatar
+    getUserAvatar: async (_parent: any, _args: any, context: any) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id }).populate('profileImage');
+      }
+      throw new AuthenticationError('Could not authenticate user.');
+    },
   },
 
   Mutation: {
@@ -88,10 +96,18 @@ const resolvers = {
     },
 
     // Mutation for sending a question to Gemini
-    askGemini: async (_parent: any, question: string) => {
+    askGemini: async (_parent: any, question: any) => {
       try {
+        // console.log('Sending question to Gemini:', JSON.parse(question).question);
+        // console.log('Type of question:', typeof(question));
+        console.log(question);
+        console.log(typeof(question));
         const apiKey = process.env.GEMINI_API_KEY;
-        const formattedQuestion = formatQuestion(question);
+        
+        const formattedQuestion = formatQuestion(question?.question);
+
+        console.log('Formatted Question:', JSON.stringify(formattedQuestion, null, 2));
+
         const response = await axios.post(
           `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
           formattedQuestion,
@@ -102,6 +118,7 @@ const resolvers = {
           }
         );
 
+        console.log('Gemini API response:', JSON.stringify(response.data, null, 2));
         const text = response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
         if (!text) {
           throw new Error('Failed to extract text from API response.');
