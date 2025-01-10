@@ -1,18 +1,19 @@
 interface GuessWhoRulesInput {
-    ifhidden: boolean
-}
-
-function GuessWhoRules({ ifhidden }:GuessWhoRulesInput) {
+    onClose: () => void;
+  }
+  
+  function GuessWhoRules({ onClose }: GuessWhoRulesInput) {
     return (
-        <div className={`rules-popup ${ifhidden ? "hidden" : ""}`}>
-            <h2 className="game-rule-title">HOW TO PLAY</h2>
-            <ul>
-                <li>Game rules here.</li>
-            </ul>
-            <div className="exit-button" 
-            onClick={() => ifhidden = true}>X</div>
-        </div>
-    )
-}
-
-export default GuessWhoRules;
+      <div className="rules-popup">
+        <h2 className="game-rule-title">HOW TO PLAY</h2>
+        <ul>
+          <li>Game rules here.</li>
+          {/* Add additional game rules here */}
+        </ul>
+        <div className="exit-button" onClick={onClose}>X</div>
+      </div>
+    );
+  }
+  
+  export default GuessWhoRules;
+  

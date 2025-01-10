@@ -4,6 +4,7 @@ import { gql } from '@apollo/client';
 export const GET_USER_PROFILE = gql`
   query getUserProfile($userName: String!) {
     getUserProfile(userName: $userName) {
+      username
       profileImage
       lastPlayed
       overallScore

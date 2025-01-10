@@ -2,6 +2,7 @@ import { Document, Schema, model } from 'mongoose';
 
 // Interface defining the structure of user profile data in the database
 interface IUserProfile extends Document {
+  username: string;
   profileImage: string;
   lastPlayed: Date;
   overallScore: number;
@@ -13,6 +14,10 @@ interface IUserProfile extends Document {
 
 // Schema for the user profile collection
 const userProfileSchema = new Schema<IUserProfile>({
+  username: { 
+    type: String, 
+    required: true },
+
   profileImage: { 
     type: String, 
     required: true },

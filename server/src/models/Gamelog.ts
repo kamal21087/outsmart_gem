@@ -6,6 +6,7 @@ interface IGamelog extends Document {
     aiResponses: string[];
     results: string;
     score: number;
+    createdAt: Date;
 }
 
 const gamelogSchema = new Schema<IGamelog>(

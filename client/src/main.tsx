@@ -9,6 +9,8 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import ErrorPage from './pages/Error';
+import GuessWhoGame from './pages/Guesswho.js';
+import GameStartLanding from './pages/GameStartLanding.js';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +33,14 @@ const router = createBrowserRouter([
       }, {
         path: '/me',
         element: <Profile />
+      },
+      {
+        path: '/guesswho/landing',
+        element: <GameStartLanding/>
+      },
+      {
+        path: '/guesswho/play',
+        element: <GuessWhoGame/>
       }
     ]
   },
