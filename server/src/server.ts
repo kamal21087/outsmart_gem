@@ -12,8 +12,6 @@ import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-console.log('Loaded TypeDefs:', typeDefs);
-console.log('Loaded Mutation Resolvers:', resolvers.Mutation);
 
 const server = new ApolloServer({
   typeDefs,
