@@ -12,13 +12,18 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext .ts"
   },
-  "keywords": ["typescript", "apollo", "express", "graphql"],
+  "keywords": [
+    "typescript",
+    "apollo",
+    "express",
+    "graphql"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@apollo/server": "^4.10.4",
     "bcrypt": "^5.0.0",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
     "express": "^4.19.2",
     "graphql": "^16.9.0",
     "jsonwebtoken": "^8.5.1",
@@ -28,11 +33,11 @@
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
-    "nodemon": "^3.1.0",
-    "typescript": "^5.4.5",
-    "eslint": "^8.57.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@typescript-eslint/parser": "^6.7.0",
-    "@typescript-eslint/eslint-plugin": "^6.7.0"
+    "eslint": "^8.57.0",
+    "nodemon": "^3.1.0",
+    "typescript": "^5.4.5"
   },
   "engines": {
     "node": ">=16.0.0",

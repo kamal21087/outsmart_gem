@@ -32,15 +32,12 @@ interface LoginUserArgs {
 // GraphQL resolvers for handling queries and mutations
 const resolvers = {
   Query: {
-    // Query to get the authenticated user's information
     me: async (_parent: any, _args: any, context: any) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id }).populate('thoughts');
       }
       throw new AuthenticationError('Could not authenticate user.');
     },
-
-    // Resolver for fetching user profile
     getUserProfile: async (_: any, { userName }: { userName: string }) => {
       try {
         const userProfile = await UserProfile.findOne({ userName });
@@ -50,8 +47,6 @@ const resolvers = {
         throw new Error('Error fetching user profile');
       }
     },
-
-    // Resolver for fetching user data
     getUserData: async (_: any, { userName }: { userName: string }) => {
       try {
         const userData = await User.findOne({ userName });
@@ -72,14 +67,11 @@ const resolvers = {
   },
 
   Mutation: {
-    // Mutation for adding a new user
     addUser: async (_parent: any, { input }: AddUserArgs) => {
       const user = await User.create({ ...input });
       const token = signToken(user.username, user.email, user._id);
       return { token, user };
     },
-
-    // Mutation for logging in a user
     login: async (_parent: any, { email, password }: LoginUserArgs) => {
       const user = await User.findOne({ email });
       if (!user) {
@@ -94,9 +86,7 @@ const resolvers = {
       const token = signToken(user.username, user.email, user._id);
       return { token, user };
     },
-
-    // Mutation for sending a question to Gemini
-    askGemini: async (_parent: any, question: any) => {
+    askGemini: async (_parent: any, question: string) => {
       try {
         // console.log('Sending question to Gemini:', JSON.parse(question).question);
         // console.log('Type of question:', typeof(question));
@@ -121,7 +111,8 @@ const resolvers = {
         console.log('Gemini API response:', JSON.stringify(response.data, null, 2));
         const text = response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
         if (!text) {
-          throw new Error('Failed to extract text from API response.');
+          console.error('Invalid API response:', response.data);
+          throw new Error('Failed to process Gemini response.');
         }
 
         return text.trim();
@@ -134,8 +125,6 @@ const resolvers = {
         throw new Error('Failed to send data to the external API.');
       }
     },
-
-    // Mutation for adding a game log
     addGamelog: async (_parent: any, { input }: AddGamelogArgs, context: any) => {
       if (context.user) {
         //Create a new game log entry
@@ -180,8 +169,6 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-
-    // Mutation for updating the profile image
     updateProfileImage: async (
       _: any,
       { userName, profileImage }: { userName: string; profileImage: string }
