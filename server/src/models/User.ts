@@ -32,15 +32,16 @@ const userSchema = new Schema<IUser>(
     },
     accountCreated: { 
       type: Date, 
-      required: true 
+      default: Date.now, // Automatically sets the account creation date
+      required: true,
     },
   },
-
-    {
+  {
     timestamps: true,
     toJSON: { getters: true },
     toObject: { getters: true },
-    });
+  }
+);
 
 userSchema.pre<IUser>('save', async function (next) {
   if (this.isNew || this.isModified('password')) {

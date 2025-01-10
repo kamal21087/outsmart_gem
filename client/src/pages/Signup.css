@@ -1,0 +1,134 @@
+/* General Signup Page Styles */
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #ffffff; /* White background */
+  padding: 2rem;
+}
+
+.welcome-message {
+  font-family: 'Bangers', cursive;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  color: #000000; /* Black text */
+  text-align: center;
+}
+
+/* Form Styles */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 600px; /* Matches the desired width */
+}
+
+/* Form Groups */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #000000;
+  text-align: center;
+}
+
+/* Input Containers */
+.email-container,
+.username-container,
+.password-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Consistent alignment */
+  position: relative;
+  width: 100%;
+  max-width: 400px; /* Consistent width */
+}
+
+/* Input Fields */
+.form-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  box-sizing: border-box; /* Includes padding in width */
+}
+
+.form-input:focus {
+  border-color: #1a89bc; /* Blue border on focus */
+  box-shadow: 0 0 5px rgba(26, 137, 188, 0.5); /* Subtle glow */
+}
+
+/* Password and Submit Wrapper */
+.password-container .form-input {
+  flex-grow: 1;
+}
+
+.btn-submit {
+  background-color: #defc99; /* Light green background */
+  border: 2px solid black; /* Black border */
+  padding: 0.5rem;
+  border-radius: 8px; /* Rounded corners */
+  font-size: 1.25rem; /* Arrow size */
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  margin-left: 10px;
+  height: 100%; /* Match height with input field */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.btn-submit:hover {
+  background-color: #b5f77d; /* Darker green on hover */
+}
+
+.btn-submit:active {
+  background-color: #9dd867; /* Even darker green on click */
+  transform: scale(0.95); /* Slightly shrink on click */
+}
+
+/* Error Message */
+.error-message {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background-color: #e64c66; /* Red background */
+  color: #ffffff; /* White text */
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.875rem;
+  text-align: center;
+  border-radius: 4px;
+}
+
+/* Signup Link */
+.signup-link {
+  margin-top: 1rem;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.875rem;
+  color: #1a1a1a;
+  text-align: center;
+}
+
+.signup-link .link {
+  color: #1a89bc; /* Link color */
+  text-decoration: none;
+}
+
+.signup-link .link:hover {
+  text-decoration: underline; /* Underline link on hover */
+}

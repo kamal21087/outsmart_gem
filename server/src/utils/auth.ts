@@ -3,29 +3,31 @@ import { GraphQLError } from 'graphql';
 import dotenv from 'dotenv';
 dotenv.config();
 
+export const authenticateToken = ({ req }: { req: any }) => {
+  const secretKey: any = process.env.JWT_SECRET_KEY; // Get the secret key from environment variables
+  let token: string | undefined =
+    req.body.token || req.query.token || req.headers.authorization;
 
-export const authenticateToken = ({ req }: any) => {
-  // Allows token to be sent via req.body, req.query, or headers
-  let token = req.body.token || req.query.token || req.headers.authorization;
-
-  // If the token is sent in the authorization header, extract the token from the header
+  // If token is in the Authorization header, extract it
   if (req.headers.authorization) {
-    token = token.split(' ').pop().trim();
+    const authHeader = req.headers.authorization;
+    token = authHeader.split(' ').pop()?.trim();
   }
 
   // If no token is provided, return the request object as is
   if (!token) {
+    console.warn('No token provided in the request.');
     return req;
   }
 
   // Try to verify the token
   try {
-    const { data }: any = jwt.verify(token, process.env.JWT_SECRET_KEY || 'qwert', { maxAge: '2hr' });
+    const { data }: any = jwt.verify(token, secretKey, { maxAge: '2h' });
     // If the token is valid, attach the user data to the request object
     req.user = data;
   } catch (err) {
-    // If the token is invalid, log an error message
-    // console.log('Invalid token');
+    // Explicitly typecast `err` to an Error to access the `message` property
+    console.error('Invalid token:', (err as Error).message);
   }
 
   // Return the request object
@@ -36,6 +38,9 @@ export const signToken = (username: string, email: string, _id: unknown) => {
   // Create a payload with the user information
   const payload = { username, email, _id };
   const secretKey: any = process.env.JWT_SECRET_KEY; // Get the secret key from environment variables
+  // Debug: Log the payload and secretKey for verification
+  console.debug('Signing token with payload:', payload);
+  console.debug('Using secret key:', secretKey);
 
   // Sign the token with the payload and secret key, and set it to expire in 2 hours
   return jwt.sign({ data: payload }, secretKey, { expiresIn: '2h' });
