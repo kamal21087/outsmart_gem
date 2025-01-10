@@ -86,7 +86,7 @@ const resolvers = {
       const token = signToken(user.username, user.email, user._id);
       return { token, user };
     },
-    askGemini: async (_parent: any, question: string) => {
+    askGemini: async (_parent: any, question: any) => {
       try {
         // console.log('Sending question to Gemini:', JSON.parse(question).question);
         // console.log('Type of question:', typeof(question));
