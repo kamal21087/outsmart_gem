@@ -38,3 +38,17 @@ export const ASK_GEMINI = gql`
     askGemini(question: $question)
   }
 `;
+
+export const ADD_GAMELOG = gql`
+  mutation AddGamelog($input: AddGamelogInput!) {
+    addGamelog(input: $input) {
+      id
+      userQuestions
+      aiResponses
+      results
+      score
+      createdAt
+      playerId
+    }
+  }
+`;

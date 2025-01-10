@@ -1,4 +1,5 @@
 export interface UserProfile {
+    username: string | null;
     profileImage: string;
     lastPlayed: string;
     overallScore: number;

@@ -14,9 +14,12 @@ const typeDefs = `#graphql
     aiResponses: [String]
     results: String!
     score: Int!
+    createdAt: String! 
+    playerId: ID!
   }
   
   type UserProfile { 
+  username: String!
   profileImage: String! 
   lastPlayed: String! 
   overallScore: Int! 
