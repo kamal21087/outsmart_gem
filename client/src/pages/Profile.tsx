@@ -5,7 +5,7 @@ import { UserData } from '../interfaces/UserData';
 import { GET_USER_PROFILE, GET_USER_DATA } from '../utils/queries';
 import { UPDATE_PROFILE_IMAGE } from '../utils/mutations';
 import './ProfilePage.css'; // Import your custom CSS
-import AuthService from '../utils/auth'; 
+import AuthService from '../utils/auth';
 
 // Component for rendering the profile page
 const ProfilePage: React.FC = () => {
@@ -14,13 +14,23 @@ const ProfilePage: React.FC = () => {
   const userName = userAuthData?.data?.username;
 
   // Fetch the user profile data
-  const { data: userProfileQueryData, loading: loadingProfile, error: errorProfile } = useQuery(GET_USER_PROFILE, {
+  const { 
+      data: userProfileQueryData, 
+      loading: loadingProfile, 
+      error: errorProfile, 
+      refetch: refetchUserProfile } 
+    = useQuery(GET_USER_PROFILE, {
     variables: { userName },
     skip: !userName, // Skip query if userName is not available
   });
 
   // Fetch the user data
-  const { data: userDataQueryData, loading: loadingData, error: errorData } = useQuery(GET_USER_DATA, {
+  const { 
+      data: userDataQueryData, 
+      loading: loadingData, 
+      error: errorData, 
+      refetch: refetchUserData } 
+    = useQuery(GET_USER_DATA, {
     variables: { userName },
     skip: !userName, // Skip query if userName is not available
   });
@@ -50,6 +60,10 @@ const ProfilePage: React.FC = () => {
       setProfileImage(newProfileImage); // Update the profile image in the state
       updateProfileImage({
         variables: { userName, profileImage: newProfileImage },
+      }).then(() => {
+        // Refetch user profile data after updating profile image
+        refetchUserProfile();
+        refetchUserData();
       });
     }
   };
@@ -65,8 +79,8 @@ const ProfilePage: React.FC = () => {
 
   // Render the profile page
   return (
-    <div className="profile-page columns"> 
-      <div className="column is-one-third"> 
+    <div className="profile-page columns">
+      <div className="column is-one-third">
         <div className="profile-image">
           <img src={profileImage} alt="Profile" />
           <div className="image-options">
@@ -81,14 +95,13 @@ const ProfilePage: React.FC = () => {
             <img src="/images/option8.jpg" alt="Option 8" onClick={() => handleImageSelect('/images/option8.jpg')} />
             <img src="/images/option9.jpg" alt="Option 9" onClick={() => handleImageSelect('/images/option9.jpg')} />
           </div>
-          <button className="button is-primary" onClick={handleSaveChanges}>Save Changes</button> 
+          <button className="button is-primary" onClick={handleSaveChanges}>Save Changes</button>
         </div>
       </div>
-      <div className="column is-two-thirds"> 
+      <div className="column is-two-thirds">
         {userProfile && userDetails && (
-          <div className="profile-info box"> 
-            <h2 className="title">{userDetails.username}</h2> 
-            <p><strong>Last Played:</strong> {userProfile.lastPlayed}</p>
+          <div className="profile-info box">
+            <h2 className="title">{userDetails.username}</h2>
             <p><strong>Account Created:</strong> {userDetails.accountCreated}</p>
             <p><strong>Email:</strong> {userDetails.email}</p>
             <p><strong>Overall Score:</strong> {userProfile.overallScore}</p>
@@ -96,6 +109,7 @@ const ProfilePage: React.FC = () => {
             <p><strong>Wins:</strong> {userProfile.totalWins}</p>
             <p><strong>Losses:</strong> {userProfile.totalLoss}</p>
             <p><strong>High Score:</strong> {userProfile.highScore}</p>
+            <p><strong>Last Played:</strong> {userProfile.lastPlayed}</p>
           </div>
         )}
       </div>

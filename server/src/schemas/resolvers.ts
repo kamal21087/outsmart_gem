@@ -138,6 +138,7 @@ const resolvers = {
     // Mutation for adding a game log
     addGamelog: async (_parent: any, { input }: AddGamelogArgs, context: any) => {
       if (context.user) {
+        //Create a new game log entry
         const gamedata = await Gamelog.create({
           ...input,
           playerId: context.user._id,
@@ -145,16 +146,32 @@ const resolvers = {
 
         const { score, results } = input;
 
-        const update = {
+        // Update user profile with cumulative score, wins, and losses
+        const update: any = {
           $inc: {
-            cumulativeScore: score || 0,
-            wins: results === 'W' ? 1 : 0,
-            losses: results === 'L' ? 1 : 0,
+            overallScore: score || 0,
+            totalWins: results === 'W' ? 1 : 0,
+            totalLoss: results === 'L' ? 1 : 0,
           },
+          $set: {
+            lastPlayed: new Date(),
+          }
         };
 
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
+        // Fetch the current high score
+        const userProfile = await UserProfile.findOne({ userName: context.user.username });
+        const currentHighScore = userProfile?.highScore ?? 0;
+
+        // Check if the new score is a high score
+        if (score > currentHighScore) {
+          update.$set = update.$set || {};
+          // Update the high score if the new score is higher
+          update.$set = { highScore: score };
+        }
+
+        // Update the user's profile
+        await UserProfile.findOneAndUpdate(
+          { userName: context.user.username },
           update,
           { new: true }
         );
