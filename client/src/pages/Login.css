@@ -21,7 +21,7 @@
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 2rem; /* Space between form groups */
+  gap: 1.5rem; /* Adjusted gap for better spacing */
   width: 100%;
   max-width: 400px; /* Limit form width */
 }
@@ -41,6 +41,7 @@
   text-align: center;
 }
 
+/* Input Containers */
 .username-container,
 .password-container {
   display: flex;
@@ -69,7 +70,7 @@
 
 /* Submit Button */
 .btn-submit {
-  position: absolute; /* Position relative to the password-container */
+  position: absolute; /* Default for desktop */
   top: 50%; /* Vertically center */
   right: -60px; /* Move slightly outside the container */
   transform: translateY(-50%); /* Adjust for exact vertical centering */
@@ -127,4 +128,58 @@
   font-size: 0.875rem;
   text-align: center;
   border-radius: 4px;
+}
+
+/* Mobile Responsive Adjustments */
+@media screen and (max-width: 768px) {
+  .welcome-message {
+    font-size: 2rem; /* Adjust for smaller screens */
+  }
+
+  .login-form {
+    gap: 1rem; /* Reduce spacing */
+    padding: 0 1rem; /* Add padding for smaller screens */
+    max-width: 90%; /* Adjust form width for smaller screens */
+  }
+
+  .username-container,
+  .password-container {
+    max-width: 100%; /* Ensure full-width on mobile */
+    flex-direction: column; /* Stack inputs vertically */
+    align-items: stretch; /* Stretch to container width */
+  }
+
+  .btn-submit {
+    position: static; /* Stack below the input */
+    transform: none;
+    max-width: 50%; /* Constrain button width to 50% of the container */
+    padding: 1rem 1.5rem; /* Larger padding for a bigger button */
+    font-size: 1.25rem; /* Increase font size for better visibility */
+    margin: 1rem auto 0; /* Center horizontally with margin */
+    background-color: #defc99; /* Light green background */
+    border: 2px solid black; /* Black border */
+    border-radius: 8px; /* Rounded corners */
+    font-family: Arial, sans-serif; /* Font for the button */
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .btn-submit:hover {
+    background-color: #b5f77d; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+  }
+
+  .btn-submit:active {
+    background-color: #9dd867; /* Even darker green on click */
+    transform: scale(0.95); /* Slightly shrink on click */
+  }
+
+  .form-input {
+    font-size: 1rem; /* Keep input size proportional */
+  }
 }

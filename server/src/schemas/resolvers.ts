@@ -86,7 +86,9 @@ const resolvers = {
       const token = signToken(user.username, user.email, user._id);
       return { token, user };
     },
-    askGemini: async (_parent: any, question: string) => {
+
+    // Mutation for sending a question to Gemini
+    askGemini: async (_parent: any, question: any) => {
       try {
         // console.log('Sending question to Gemini:', JSON.parse(question).question);
         // console.log('Type of question:', typeof(question));
@@ -127,7 +129,6 @@ const resolvers = {
     },
     addGamelog: async (_parent: any, { input }: AddGamelogArgs, context: any) => {
       if (context.user) {
-        //Create a new game log entry
         const gamedata = await Gamelog.create({
           ...input,
           playerId: context.user._id,
@@ -135,32 +136,16 @@ const resolvers = {
 
         const { score, results } = input;
 
-        // Update user profile with cumulative score, wins, and losses
-        const update: any = {
+        const update = {
           $inc: {
-            overallScore: score || 0,
-            totalWins: results === 'W' ? 1 : 0,
-            totalLoss: results === 'L' ? 1 : 0,
+            cumulativeScore: score || 0,
+            wins: results === 'W' ? 1 : 0,
+            losses: results === 'L' ? 1 : 0,
           },
-          $set: {
-            lastPlayed: new Date(),
-          }
         };
 
-        // Fetch the current high score
-        const userProfile = await UserProfile.findOne({ userName: context.user.username });
-        const currentHighScore = userProfile?.highScore ?? 0;
-
-        // Check if the new score is a high score
-        if (score > currentHighScore) {
-          update.$set = update.$set || {};
-          // Update the high score if the new score is higher
-          update.$set = { highScore: score };
-        }
-
-        // Update the user's profile
-        await UserProfile.findOneAndUpdate(
-          { userName: context.user.username },
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
           update,
           { new: true }
         );

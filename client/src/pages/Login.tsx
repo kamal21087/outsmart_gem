@@ -7,7 +7,7 @@ import Auth from '../utils/auth';
 
 const Login = () => {
   const [formState, setFormState] = useState({ email: '', password: '' });
-  const [login, { error, data }] = useMutation(LOGIN_USER);
+  const [login, { error }] = useMutation(LOGIN_USER);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -26,9 +26,10 @@ const Login = () => {
 
       Auth.login(data.login.token); // Save the token for authenticated actions
     } catch (e) {
-      console.error(e);
+      console.error('Login failed:', e);
     }
 
+    // Reset the form state after submission
     setFormState({
       email: '',
       password: '',
@@ -49,6 +50,8 @@ const Login = () => {
               type="email"
               value={formState.email}
               onChange={handleChange}
+              placeholder="Enter your email"
+              required // Ensure the email field is validated
             />
           </div>
         </div>
@@ -63,6 +66,8 @@ const Login = () => {
               type="password"
               value={formState.password}
               onChange={handleChange}
+              placeholder="Enter your password"
+              required // Ensure the password field is validated
             />
             <button className="btn-submit" type="submit">→</button>
           </div>
@@ -70,10 +75,14 @@ const Login = () => {
       </form>
 
       <p className="signup-link">
-        Don't have an account?{' '}
+        Don&apos;t have an account?{' '}
         <Link to="/signup" className="link">Sign up here</Link>
       </p>
-      {error && <div className="error-message">{error.message}</div>}
+      {error && (
+        <div className="error-message">
+          {error.message || 'An error occurred while logging in.'}
+        </div>
+      )}
     </main>
   );
 };
