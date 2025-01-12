@@ -73,7 +73,9 @@ const ProfilePage: React.FC = () => {
   // Display loading or error messages if necessary
   if (!userId) return <p>Please sign in to view your profile.</p>;
   if (loadingProfile || loadingData) return <p>Loading...</p>;
-  if (errorProfile || errorData) return <p>Error loading profile</p>;
+ 
+  if (errorProfile) return <p>Error loading profile</p>;
+  if (errorData) return <p>Error loading Data</p>;
 
   // Extract user profile and user data
   const userProfile: UserProfile = userProfileQueryData.getUserProfile;
@@ -90,15 +92,15 @@ const ProfilePage: React.FC = () => {
           <img src={profileImage} alt="Profile" />
           <div className="image-options">
             {/* Options for selecting a new profile image */}
-            <img src="/images/option1.jpg" alt="Option 1" onClick={() => handleImageSelect('/images/option1.jpg')} />
-            <img src="/images/option2.jpg" alt="Option 2" onClick={() => handleImageSelect('/images/option2.jpg')} />
-            <img src="/images/option3.jpg" alt="Option 3" onClick={() => handleImageSelect('/images/option3.jpg')} />
-            <img src="/images/option4.jpg" alt="Option 4" onClick={() => handleImageSelect('/images/option4.jpg')} />
-            <img src="/images/option5.jpg" alt="Option 5" onClick={() => handleImageSelect('/images/option5.jpg')} />
-            <img src="/images/option6.jpg" alt="Option 6" onClick={() => handleImageSelect('/images/option6.jpg')} />
-            <img src="/images/option7.jpg" alt="Option 7" onClick={() => handleImageSelect('/images/option7.jpg')} />
-            <img src="/images/option8.jpg" alt="Option 8" onClick={() => handleImageSelect('/images/option8.jpg')} />
-            <img src="/images/option9.jpg" alt="Option 9" onClick={() => handleImageSelect('/images/option9.jpg')} />
+            <img src="/images/option1.webp" alt="Option 1" onClick={() => handleImageSelect('/images/option1.webp')} />
+            <img src="/images/option2.webp" alt="Option 2" onClick={() => handleImageSelect('/images/option2.webp')} />
+            <img src="/images/option3.webp" alt="Option 3" onClick={() => handleImageSelect('/images/option3.webp')} />
+            <img src="/images/option4.webp" alt="Option 4" onClick={() => handleImageSelect('/images/option4.webp')} />
+            <img src="/images/option5.webp" alt="Option 5" onClick={() => handleImageSelect('/images/option5.webp')} />
+            <img src="/images/option6.webp" alt="Option 6" onClick={() => handleImageSelect('/images/option6.webp')} />
+            <img src="/images/option7.webp" alt="Option 7" onClick={() => handleImageSelect('/images/option7.webp')} />
+            <img src="/images/option8.webp" alt="Option 8" onClick={() => handleImageSelect('/images/option8.webp')} />
+            <img src="/images/option9.webp" alt="Option 9" onClick={() => handleImageSelect('/images/option9.webp')} />
           </div>
           <button className="button is-primary" onClick={handleSaveChanges}>Save Changes</button>
           <button className="button is-primary">Game History</button>
