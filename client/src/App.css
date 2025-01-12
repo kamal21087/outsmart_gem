@@ -1,61 +1,157 @@
 @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Open+Sans:wght@400;600&display=swap');
 
+/* General Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  color: #000000;
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-container {
+  flex: 1;
+  padding: 1rem;
+}
+
 /* Header Styles */
 .header {
-  background-color: #ffffff; /* White background */
+  background-color: #ffffff; /* Pure white background */
   color: #000000; /* Black text */
-  padding: 1rem 0; /* Vertical padding */
-  /* Removed border-bottom to eliminate any visible line */
-  border: none;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e0e0e0; /* Subtle border for separation */
   position: sticky;
   top: 0;
-  z-index: 1000; /* Ensures header stays above other content */
+  z-index: 1000; /* Ensure header stays above other content */
 }
 
-.header .container {
+.header-container {
   display: flex;
-  justify-content: flex-end; /* Align buttons to the right */
+  justify-content: flex-end; /* Default alignment */
   align-items: center;
-  max-width: 1200px; /* Restricts header content width */
-  margin: 0 auto; /* Centers the content */
-  padding: 0 1rem; /* Adds horizontal padding */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
-.header .buttons {
-  display: flex;
-  gap: 1rem; /* Space between buttons */
+/* Username Display */
+.username-display {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  color: #4a4a4a; /* Dark gray */
+  text-decoration: underline;
+  margin-right: 1rem;
 }
 
-.header .button {
-  font-family: 'Open Sans', sans-serif; /* Custom font for buttons */
-  background-color: #e0e0e0; /* Light gray background */
-  color: #000000; /* Black text */
-  padding: 0.5rem 1rem; /* Button padding */
+/* Hamburger Button */
+.hamburger {
+  background: none;
   border: none;
-  border-radius: 4px; /* Slightly rounded corners */
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: #000000;
+  transition: color 0.3s ease;
+}
+
+.hamburger:hover {
+  color: #1a89bc; /* Slight blue tint on hover */
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  position: absolute;
+  top: 2.5rem; /* Adjust based on header height */
+  right: 0;
+  background-color: #ffffff; /* White dropdown background */
+  border: 1px solid #e0e0e0; /* Light gray border */
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 150px; /* Adjust width as needed */
+  z-index: 1000;
+  display: none;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  text-decoration: none;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  color: #000000;
+  cursor: pointer;
+  display: block;
+  background-color: #ffffff; /* White background */
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none; /* Remove border from the last item */
+}
+
+.dropdown-item:hover {
+  background-color: #f7f7f7; /* Light gray on hover */
+}
+
+.dropdown-item:active {
+  background-color: #e0e0e0; /* Slightly darker gray when clicked */
+}
+
+/* Mobile View Adjustments */
+@media screen and (max-width: 768px) {
+  .header-container {
+    justify-content: center; /* Center-align items */
+  }
+
+  .username-display {
+    margin-right: 0; /* Remove margin for centering */
+    text-align: center; /* Center text */
+  }
+
+  .hamburger {
+    margin-left: 1rem; /* Add space to separate from username */
+  }
+}
+
+/* Login Button */
+.login-button {
+  background-color: #e0e0e0; /* Light gray */
+  color: #000000; /* Black text */
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Open Sans', sans-serif;
   font-size: 1rem;
   cursor: pointer;
-  text-decoration: none; /* Makes links look like buttons */
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 
-.header .button:hover {
-  background-color: #d6d6d6; /* Slightly darker gray on hover */
-  transform: scale(1.05); /* Slightly enlarges button on hover */
-}
-
-.header .button:active {
-  background-color: #c0c0c0; /* Darker gray when clicked */
-  transform: scale(0.95); /* Shrinks button on click */
+.login-button:hover {
+  background-color: #d6d6d6; /* Slightly darker gray */
 }
 
 /* Footer Styles */
 .footer {
-  background-color: #e0e0e0; /* Light gray background */
-  color: #000000; /* Black text */
+  background-color: #e0e0e0;
+  color: #000000;
   text-align: center;
-  padding: 1rem 0; /* Vertical padding */
-  font-size: 0.875rem; /* Slightly smaller text */
+  padding: 1rem 0;
+  font-size: 0.875rem;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -63,7 +159,7 @@
 }
 
 .footer a {
-  color: #000000; /* Black links */
+  color: #000000;
   text-decoration: none;
 }
 
