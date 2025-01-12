@@ -7,7 +7,7 @@ import Auth from '../utils/auth';
 
 const Login = () => {
   const [formState, setFormState] = useState({ email: '', password: '' });
-  const [login, { error, data }] = useMutation(LOGIN_USER);
+  const [login, { error}] = useMutation(LOGIN_USER);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;

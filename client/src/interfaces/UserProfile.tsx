@@ -6,5 +6,4 @@ export interface UserProfile {
     totalWins: number;
     totalLoss: number;
     highScore: number;
-    playerRank: number;
   }

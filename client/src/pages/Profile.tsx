@@ -9,9 +9,10 @@ import AuthService from '../utils/auth';
 
 // Component for rendering the profile page
 const ProfilePage: React.FC = () => {
-  // Get authenticated user's profile information
   const userAuthData = AuthService.getProfile();
-  const userName = userAuthData?.data?.username;
+  console.log('User Auth Data:', userAuthData); // Add console log
+  const userId = userAuthData?.data?.id;
+  console.log('User ID:', userId); // Add console log
 
   // Fetch the user profile data
   const { 
@@ -20,8 +21,8 @@ const ProfilePage: React.FC = () => {
       error: errorProfile, 
       refetch: refetchUserProfile } 
     = useQuery(GET_USER_PROFILE, {
-    variables: { userName },
-    skip: !userName, // Skip query if userName is not available
+      variables: { id: userId }, 
+      skip: !userId,
   });
 
   // Fetch the user data
@@ -31,8 +32,8 @@ const ProfilePage: React.FC = () => {
       error: errorData, 
       refetch: refetchUserData } 
     = useQuery(GET_USER_DATA, {
-    variables: { userName },
-    skip: !userName, // Skip query if userName is not available
+      variables: { id: userId }, 
+      skip: !userId,
   });
 
   // Mutation for updating the profile image
@@ -57,10 +58,10 @@ const ProfilePage: React.FC = () => {
 
   // Save the changes to the profile image by updating the server
   const handleSaveChanges = () => {
-    if (newProfileImage && userName) {
+    if (newProfileImage && userId) {
       setProfileImage(newProfileImage); // Update the profile image in the state
       updateProfileImage({
-        variables: { userName, profileImage: newProfileImage },
+        variables: { id: userId, profileImage: newProfileImage },
       }).then(() => {
         // Refetch user profile data after updating profile image
         refetchUserProfile();
@@ -70,7 +71,7 @@ const ProfilePage: React.FC = () => {
   };
 
   // Display loading or error messages if necessary
-  if (!userName) return <p>Please sign in to view your profile.</p>;
+  if (!userId) return <p>Please sign in to view your profile.</p>;
   if (loadingProfile || loadingData) return <p>Loading...</p>;
   if (errorProfile || errorData) return <p>Error loading profile</p>;
 
@@ -79,14 +80,13 @@ const ProfilePage: React.FC = () => {
   const userDetails: UserData = userDataQueryData.getUserData;
   console.log(userProfileQueryData);
   console.log(userDataQueryData);
-  
-  
 
   // Render the profile page
   return (
     <div className="profile-page columns">
       <div className="column is-one-third">
         <div className="profile-image">
+          <h2>Select Your Profile Image</h2>
           <img src={profileImage} alt="Profile" />
           <div className="image-options">
             {/* Options for selecting a new profile image */}
@@ -101,6 +101,7 @@ const ProfilePage: React.FC = () => {
             <img src="/images/option9.jpg" alt="Option 9" onClick={() => handleImageSelect('/images/option9.jpg')} />
           </div>
           <button className="button is-primary" onClick={handleSaveChanges}>Save Changes</button>
+          <button className="button is-primary">Game History</button>
         </div>
       </div>
       <div className="column is-two-thirds">
@@ -110,7 +111,6 @@ const ProfilePage: React.FC = () => {
             <p><strong>Account Created:</strong> {userDetails.accountCreated}</p>
             <p><strong>Email:</strong> {userDetails.email}</p>
             <p><strong>Overall Score:</strong> {userProfile.overallScore}</p>
-            <p><strong>Rank:</strong> {userProfile.playerRank}</p>
             <p><strong>Wins:</strong> {userProfile.totalWins}</p>
             <p><strong>Losses:</strong> {userProfile.totalLoss}</p>
             <p><strong>High Score:</strong> {userProfile.highScore}</p>

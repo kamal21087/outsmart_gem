@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { type MouseEvent } from 'react';
+import { MouseEvent } from 'react';
 import Auth from '../../utils/auth';
 
 const Header = () => {
@@ -8,23 +8,30 @@ const Header = () => {
     Auth.logout();
   };
 
+  // Fetch the user's profile information using Auth.getProfile()
+  const profile = Auth.getProfile();
+
   return (
     <header className="header">
       <div className="container">
         <div className="buttons">
           {Auth.loggedIn() ? (
-            <>
-              <Link className="button" to="/me">
-                {Auth.getProfile().data.username}'s Profile
-              </Link>
-              <button className="button" onClick={logout}>
-                Logout
-              </button>
-            </>
+            // Check if profile and profile.data are not null before accessing username
+            profile && profile.data ? (
+              <>
+                <Link className="button" to="/me">
+                  {profile.data.username}'s Profile
+                </Link>
+                <button className="button" onClick={logout}>
+                  Logout
+                </button>
+              </>
+            ) : (
+              <p>Loading profile...</p>
+            )
           ) : (
             <Link className="button" to="/login">
-              Login
-            </Link>
+              Login</Link>
           )}
         </div>
       </div>
@@ -33,3 +40,4 @@ const Header = () => {
 };
 
 export default Header;
+
