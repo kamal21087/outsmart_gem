@@ -28,3 +28,14 @@ export const GET_USER_DATA = gql`
   }
 `;
 
+export const GET_USER_AVATAR = gql`
+  query getUserAvatar {
+    getUserAvatar
+  }
+`;
+
+export const GET_LOGGED_IN_USERNAME = gql`
+  query getLoggedInUsername {
+    getLoggedInUsername
+  }
+`;

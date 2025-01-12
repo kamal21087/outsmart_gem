@@ -1,0 +1,95 @@
+/* Welcome Message */
+.welcome-message {
+    font-family: 'Bangers', cursive; /* Custom Bangers font */
+    font-size: 3rem; /* Larger text for emphasis */
+    text-align: center;
+    color: #1a1a1a; /* Black text color */
+    margin-bottom: 0;
+    margin-top: 20px;
+}
+
+.chat-container {
+  padding-bottom: 200px;
+}
+
+.chat-entry-container {
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  bottom: 10%;
+}
+
+.chat-entry-avatar {
+  position: absolute;
+  width: 60px;
+  border-radius: 22%;
+  left: 8%;
+}
+
+.chat-entry-area {
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%; /* Limit the maximum width */
+  height: 60px; /* Set an appropriate height */
+  padding: 10px; /* Add padding for better usability */
+  font-size: 18px; /* Make the text readable */
+  font-family: 'Zain', Arial, sans-serif; /* Use a modern font */
+  border: 1px solid #ccc; /* Add a light border */
+  border-radius: 5px; /* Round the corners */
+  outline: none; /* Remove the default focus outline */
+  resize: vertical; /* Allow vertical resizing only */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Add a subtle inner shadow */
+  resize: none;
+}
+
+.chat-entry-area:focus {
+  border-color: #cddd49; /* Highlight border on focus */
+  box-shadow: 0 0 5px #cddd49; /* Add focus glow */
+}
+
+.chat-entry-area:hover {
+  border-color: #ddd; /* Subtle hover effect */
+}
+
+.chat-entry-area:disabled {
+  background-color: #f0f0f0; /* Gray background for disabled state */
+  border-color: #ccc; /* Light border */
+  color: #999; /* Dim text */
+  cursor: not-allowed; /* Indicate disabled state */
+}
+
+/* Submit Button */
+.btn-submit {
+  position:absolute;
+  bottom: 5%;
+  right: 10%;
+  background-color: #defc99; /* Light green background */
+  border: 2px solid #616161; /* Black border */
+  padding: 0.5rem;
+  border-radius: 8px; /* Rounded corners */
+  font-size: 1.25rem; /* Adjust font size for the arrow */
+  font-family: 'Zain', Arial, sans-serif; /* Font for the arrow */
+  font-weight: 900;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Match the height of the input field */
+}
+
+.btn-submit:hover {
+  background-color: #b5f77d; /* Darker green on hover */
+  transform: translateY(-50%) scale(1.1); /* Slightly enlarge on hover */
+}
+
+.btn-submit:active {
+  background-color: #9dd867; /* Even darker green on click */
+  transform: translateY(-50%) scale(0.95); /* Slightly shrink on click */
+}
+
