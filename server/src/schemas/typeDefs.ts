@@ -28,8 +28,7 @@ const typeDefs = `#graphql
   overallScore: Int! 
   totalWins: Int! 
   totalLoss: Int! 
-  highScore: Int! 
-  playerRank: Int! 
+  highScore: Int!
   }
 
   # Input type for creating a new user

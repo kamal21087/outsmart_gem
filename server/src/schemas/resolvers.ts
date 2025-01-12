@@ -38,25 +38,35 @@ const resolvers = {
       }
       throw new AuthenticationError('Could not authenticate user.');
     },
-    getUserProfile: async (_: any, { userName }: { userName: string }) => {
-      try {
-        const userProfile = await UserProfile.findOne({ userName });
-        return userProfile;
-      } catch (error) {
-        console.error('Error fetching user profile:', error);
-        throw new Error('Error fetching user profile');
+    
+    getUserProfile: async (_parent: any, { id }:any, context:any) => {
+      if (context.user) {
+        try {
+          const userProfile = await UserProfile.findById(id);
+          console.log('UserProfile:', userProfile); // Debug log
+          return userProfile;
+        } catch (error) {
+          console.error('Error fetching user profile:', error);
+          throw new Error('Error fetching user profile');
+        }
       }
-    },
-    getUserData: async (_: any, { userName }: { userName: string }) => {
-      try {
-        const userData = await User.findOne({ userName });
-        return userData;
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-        throw new Error('Error fetching user data');
-      }
+      throw new AuthenticationError('Could not authenticate user.');
     },
 
+    getUserData: async (_parent:any, { id }:any, context:any) => {
+      if (context.user) {
+        try {
+          const userData = await User.findById(id);
+          console.log('UserData:', userData); // Debug log
+          return userData;
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+          throw new Error('Error fetching user data');
+        }
+      }
+      throw new AuthenticationError('Could not authenticate user.');
+    },
+    
     // Resolver for getting current user avatar
     getUserAvatar: async (_parent: any, _args: any, context: any) => {
       if (context.user) {

@@ -9,7 +9,6 @@ interface IUserProfile extends Document {
   totalWins: number;
   totalLoss: number;
   highScore: number;
-  playerRank: number;
 }
 
 // Schema for the user profile collection
@@ -23,28 +22,29 @@ const userProfileSchema = new Schema<IUserProfile>({
     required: true },
 
   lastPlayed: { 
-    type: Date, 
+    type: Date,
+    default: Date.now, 
     required: true },
 
   overallScore: { 
     type: Number, 
+    default: 0,
     required: true },
 
   totalWins: { 
     type: Number, 
+    default: 0,
     required: true },
 
   totalLoss: { 
     type: Number, 
+    default: 0,
     required: true },
 
   highScore: { 
     type: Number, 
-    required: true },
-
-  playerRank: { 
-    type: Number, 
-    required: true },
+    default: 0,
+    required: true }
 });
 
 // Model for the user profile collection 
