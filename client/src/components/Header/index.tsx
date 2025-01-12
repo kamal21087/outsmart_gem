@@ -46,7 +46,7 @@ const Header = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/profile" className="dropdown-item" onClick={() => setDropdownOpen(false)}>
+                    <Link to="/me" className="dropdown-item" onClick={() => setDropdownOpen(false)}>
                       PROFILE
                     </Link>
                   </li>

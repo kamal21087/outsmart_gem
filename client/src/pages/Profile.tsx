@@ -73,7 +73,6 @@ const ProfilePage: React.FC = () => {
   // Display loading or error messages if necessary
   if (!userId) return <p>Please sign in to view your profile.</p>;
   if (loadingProfile || loadingData) return <p>Loading...</p>;
- 
   if (errorProfile) return <p>Error loading profile</p>;
   if (errorData) return <p>Error loading Data</p>;
 
