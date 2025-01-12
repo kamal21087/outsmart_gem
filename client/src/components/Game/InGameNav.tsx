@@ -3,7 +3,7 @@ import "./InGameNav.css";
 // import GuessWhoRules from "./GuessWhoRules";
 
 interface InGameNavInput {
-    remainingQuestions: number
+  remainingQuestions: number;
 }
 
 function InGameNav({ remainingQuestions }: InGameNavInput) {
@@ -23,3 +23,4 @@ function InGameNav({ remainingQuestions }: InGameNavInput) {
 }
 
 export default InGameNav;
+

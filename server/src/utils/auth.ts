@@ -36,7 +36,7 @@ export const authenticateToken = ({ req }: { req: any }) => {
 
 export const signToken = (username: string, email: string, _id: unknown) => {
   // Create a payload with the user information
-  const payload = { username, email, _id };
+  const payload = { username, email, id: _id };
   const secretKey: any = process.env.JWT_SECRET_KEY; // Get the secret key from environment variables
   // Debug: Log the payload and secretKey for verification
   console.debug('Signing token with payload:', payload);
