@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Delius+Unicase:wght@400;700&family=Indie+Flower&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Reddit+Mono:wght@200..900&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap');
+
+.chat-cloud {
+    overflow: auto;
+}
+
+.chat-username {
+    font-family: 'Zain', cursive;
+    font-size: 14pt;
+    font-weight: 500;
+    color: #616161;
+    margin-bottom: 0.5rem;
+}
+
+.chat-message {
+    font-family: 'Indie Flower';
+    font-weight: 800;
+    font-size: 18pt;
+}
+
+.user-identity {
+    display: flex;
+    flex-direction: column;
+    width: 10%;
+    align-items: center;
+}
+
+.chat-avatar {
+    opacity: 90%;
+}
+
+.message-right {
+    text-align: right;
+    padding-right: 3%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 15px;
+    margin-left: 13%;
+    margin-right: 3%;
+    border: 2px dotted rgb(187, 187, 187);
+}
+
+.message-left {
+    text-align: left;
+    padding-left: 3%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 15px;
+    margin-left: 3%;
+    margin-right: 13%;
+    border: 2px dotted rgb(187, 187, 187);
+}

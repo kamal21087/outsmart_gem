@@ -70,10 +70,27 @@ const resolvers = {
     // Resolver for getting current user avatar
     getUserAvatar: async (_parent: any, _args: any, context: any) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('profileImage');
+        return User.findOne({ _id: context.user._id }).select('profileImage');
       }
       throw new AuthenticationError('Could not authenticate user.');
     },
+
+    getLoggedInUsername: async (_parent: any, _args: any, context: any) => {
+      if (context.user) {
+        try {
+          const user = await User.findOne({ _id: context.user._id });
+          if (!user) {
+            throw new Error('User not found');
+          }
+          return user.username;
+        } catch (error) {
+          console.error('Error fetching logged-in user username:', error);
+          throw new Error('Error fetching username');
+        }
+      }
+      throw new AuthenticationError('User is not authenticated.');
+    },
+  
   },
 
   Mutation: {
@@ -96,17 +113,14 @@ const resolvers = {
       const token = signToken(user.username, user.email, user._id);
       return { token, user };
     },
+
+    // Mutation for sending a question to Gemini
     askGemini: async (_parent: any, question: any) => {
       try {
-        // console.log('Sending question to Gemini:', JSON.parse(question).question);
-        // console.log('Type of question:', typeof(question));
-        console.log(question);
-        console.log(typeof(question));
+
         const apiKey = process.env.GEMINI_API_KEY;
         
         const formattedQuestion = formatQuestion(question?.question);
-
-        console.log('Formatted Question:', JSON.stringify(formattedQuestion, null, 2));
 
         const response = await axios.post(
           `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
@@ -118,7 +132,6 @@ const resolvers = {
           }
         );
 
-        console.log('Gemini API response:', JSON.stringify(response.data, null, 2));
         const text = response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
         if (!text) {
           console.error('Invalid API response:', response.data);
@@ -145,32 +158,16 @@ const resolvers = {
 
         const { score, results } = input;
 
-        // Update user profile with cumulative score, wins, and losses
-        const update: any = {
+        const update = {
           $inc: {
-            overallScore: score || 0,
-            totalWins: results === 'W' ? 1 : 0,
-            totalLoss: results === 'L' ? 1 : 0,
+            cumulativeScore: score || 0,
+            wins: results === 'W' ? 1 : 0,
+            losses: results === 'L' ? 1 : 0,
           },
-          $set: {
-            lastPlayed: new Date(),
-          }
         };
 
-        // Fetch the current high score
-        const userProfile = await UserProfile.findOne({ userName: context.user.username });
-        const currentHighScore = userProfile?.highScore ?? 0;
-
-        // Check if the new score is a high score
-        if (score > currentHighScore) {
-          update.$set = update.$set || {};
-          // Update the high score if the new score is higher
-          update.$set = { highScore: score };
-        }
-
-        // Update the user's profile
-        await UserProfile.findOneAndUpdate(
-          { userName: context.user.username },
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
           update,
           { new: true }
         );

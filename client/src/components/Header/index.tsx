@@ -1,39 +1,65 @@
-import { Link } from 'react-router-dom';
-import { MouseEvent } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import Auth from '../../utils/auth';
+import '../../App.css'; // Corrected path
 
 const Header = () => {
-  const logout = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+  const location = useLocation(); // Get the current route
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => setDropdownOpen((prev) => !prev);
+
+  const logout = () => {
     Auth.logout();
+    setDropdownOpen(false);
   };
 
-  // Fetch the user's profile information using Auth.getProfile()
-  const profile = Auth.getProfile();
+  // Return empty header for the login page
+  if (location.pathname === '/login') {
+    return <header className="header header-empty" />;
+  }
 
   return (
     <header className="header">
-      <div className="container">
-        <div className="buttons">
-          {Auth.loggedIn() ? (
-            // Check if profile and profile.data are not null before accessing username
-            profile && profile.data ? (
-              <>
-                <Link className="button" to="/me">
-                  {profile.data.username}'s Profile
-                </Link>
-                <button className="button" onClick={logout}>
-                  Logout
-                </button>
-              </>
-            ) : (
-              <p>Loading profile...</p>
-            )
-          ) : (
-            <Link className="button" to="/login">
-              Login</Link>
-          )}
-        </div>
+      <div className="header-container">
+        {Auth.loggedIn() ? (
+          <>
+            <span className="username-display">
+              {Auth.getProfile().data.username}
+            </span>
+            <div className="dropdown">
+              <button
+                className="hamburger"
+                onClick={toggleDropdown}
+                aria-label="Toggle menu"
+                aria-expanded={dropdownOpen}
+              >
+                ☰
+              </button>
+              <ul className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
+                <li>
+                  <Link to="/" className="dropdown-item" onClick={() => setDropdownOpen(false)}>
+                    HOME
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/profile" className="dropdown-item" onClick={() => setDropdownOpen(false)}>
+                    PROFILE
+                  </Link>
+                </li>
+                <li>
+                  <button className="dropdown-item" onClick={logout}>
+                    LOGOUT
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </>
+        ) : (
+          <Link to="/login" className="login-button">
+            LOGIN
+          </Link>
+        )}
       </div>
     </header>
   );

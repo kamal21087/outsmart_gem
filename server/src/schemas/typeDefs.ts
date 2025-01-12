@@ -60,6 +60,7 @@ const typeDefs = `#graphql
     getUserProfile(userName: String!): UserProfile
     getUserData(userName: String!): User
     getUserAvatar: String!
+    getLoggedInUsername: String!
   }
 
   # Root Mutation type

@@ -1,27 +1,25 @@
 import { useState } from "react";
-import GuessWhoRules from "./GuessWhoRules";
+import "./InGameNav.css";
+// import GuessWhoRules from "./GuessWhoRules";
 
 interface InGameNavInput {
   remainingQuestions: number;
 }
 
 function InGameNav({ remainingQuestions }: InGameNavInput) {
-  const [rulesDisplay, setRulesDisplay] = useState(false);
+    const [rulesDisplay, setRulesDisplay] = useState(false);
 
-  const handleToggleRules = () => {
-    setRulesDisplay(!rulesDisplay);
-  };
-
-  return (
-    <div>
-      <ul>
-        <li onClick={handleToggleRules}>HOW TO PLAY</li>
-        <li>HINT</li>
-        <li>QUESTIONS LEFT: {remainingQuestions}</li>
-      </ul>
-      <GuessWhoRules display={rulesDisplay} onClose={handleToggleRules} /> 
-    </div>
-  );
+    return (
+        <div className="ingame-nav-container">
+            <ul className="ingame-nav">
+                <li className="ingame-nav-element" onClick={() => 
+                    setRulesDisplay(!rulesDisplay)}>HOW TO PLAY</li>
+                <li className="ingame-nav-element">HINT</li>
+                <li className="ingame-nav-element">QUESTIONS LEFT: {remainingQuestions}</li>
+            </ul>
+            {/* <GuessWhoRules ifhidden={rulesDisplay} /> */}
+        </div>
+    );
 }
 
 export default InGameNav;
