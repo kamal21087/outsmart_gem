@@ -45,7 +45,8 @@ const ProfilePage: React.FC = () => {
   // Set the initial profile image when user profile data is loaded
   useEffect(() => {
     if (userProfileQueryData) {
-      setProfileImage(userProfileQueryData.getUserProfile.profileImage);
+      const userImage = userProfileQueryData.getUserProfile?.profileImage || '/images/option1.jpg';
+      setProfileImage(userImage);
     }
   }, [userProfileQueryData]);
 
@@ -76,6 +77,10 @@ const ProfilePage: React.FC = () => {
   // Extract user profile and user data
   const userProfile: UserProfile = userProfileQueryData.getUserProfile;
   const userDetails: UserData = userDataQueryData.getUserData;
+  console.log(userProfileQueryData);
+  console.log(userDataQueryData);
+  
+  
 
   // Render the profile page
   return (

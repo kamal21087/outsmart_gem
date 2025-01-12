@@ -30,7 +30,7 @@ const GamePage: React.FC = () => {
         <div className="modal-background" onClick={handleToggleModal}></div>
         <div className="modal-content">
           <div className="box">
-            <GuessWhoRules onClose={handleToggleModal} />
+            <GuessWhoRules display={isModalActive} onClose={handleToggleModal} />
           </div>
         </div>
         <button className="modal-close is-large" aria-label="close" onClick={handleToggleModal}></button>

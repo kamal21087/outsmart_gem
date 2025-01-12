@@ -20,7 +20,7 @@ export const GET_USER_PROFILE = gql`
 export const GET_USER_DATA = gql`
   query getUserData($userName: String!) {
     getUserData(userName: $userName) {
-      id
+      _id
       username
       email
       accountCreated

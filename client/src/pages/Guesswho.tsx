@@ -72,7 +72,6 @@ const GuessWhoGame = () => {
       </button>
       {error && <p>Error: {error.message}</p>}
       {answer && <p>Gemini's Answer: {answer}</p>}
-      <div className='ifhidden'></div>
       <EndGameScreen gameResult={gameResult} />
     </div>
   );
