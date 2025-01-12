@@ -6,6 +6,8 @@
     color: #1a1a1a; /* Black text color */
     margin-bottom: 0;
     margin-top: 20px;
+    pointer-events: none;
+    user-select: none;
 }
 
 .chat-container {
