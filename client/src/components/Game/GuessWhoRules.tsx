@@ -1,5 +1,5 @@
 import React from 'react';
-import './InGameNav.css'; // Import your custom CSS
+import './GuaessHowRules.css/'
 
 interface GuessWhoRulesInput {
   display: boolean;
