@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Delius+Unicase:wght@400;700&family=Indie+Flower&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Reddit+Mono:wght@200..900&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap');
+
+.ingame-nav-container {
+    width: 50%;
+}
+
+.ingame-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Zain';
+    font-size: 18pt;
+    margin-top: 0px;
+    margin-bottom: 5px;
+    color: gray;
+}
+
+.ingame-nav-element {
+    border-right: 1px solid gray;
+    flex-grow: 1;
+    margin-right: 5%;
+}
+
+.ingame-nav-element:last-child {
+    border-right: none;
+}
+
+.ingame-nav-element:hover {
+    color: #cddd49;
+    cursor: pointer;
+}
