@@ -15,7 +15,7 @@ const __dirname = dirname(__filename);
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
 });
 
 const startApolloServer = async () => {
