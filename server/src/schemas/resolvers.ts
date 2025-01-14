@@ -177,6 +177,7 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
+    
     updateProfileImage: async (
       _: any,
       { userName, profileImage }: { userName: string; profileImage: string }
