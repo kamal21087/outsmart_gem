@@ -6,7 +6,6 @@ import { gql } from '@apollo/client';
 //     getUserProfile(id: $id) {
 //       username
 //       profileImage
-//       lastPlayed
 //       overallScore
 //       totalWins
 //       totalLoss
@@ -24,7 +23,6 @@ export const GET_USER_DATA = gql`
       email
       accountCreated
       profileImage 
-      lastPlayed 
       overallScore 
       totalWins 
       totalLoss 
