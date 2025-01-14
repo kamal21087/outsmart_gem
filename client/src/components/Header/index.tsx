@@ -4,7 +4,7 @@ import Auth from '../../utils/auth';
 import '../../App.css'; // Corrected path
 
 const Header = () => {
-  const location = useLocation();
+  // const location = useLocation();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
