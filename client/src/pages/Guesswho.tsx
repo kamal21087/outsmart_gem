@@ -29,7 +29,7 @@ const GuessWhoGame = () => {
   const { data } = useQuery(GET_LOGGED_IN_USERNAME);
   const displayName = data?.getLoggedInUsername || 'Guest';
   const { data: userAvatarData } = useQuery(GET_USER_AVATAR);
-  const userAvatar = userAvatarData?.getUserAvatar || '../../public/images/option1.webp';
+  const userAvatar = userAvatarData?.getUserAvatar || '../../images/option1.webp';
   const aiAvatar = '../../public/images/option0.webp';
 
   const [askGemini, { loading, error }] = useMutation(ASK_GEMINI);
