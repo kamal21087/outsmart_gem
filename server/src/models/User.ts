@@ -9,7 +9,6 @@ interface IUser extends Document {
   accountCreated: Date;
   isCorrectPassword(password: string): Promise<boolean>;
   profileImage: string;
-  lastPlayed: Date;
   overallScore: number;
   totalWins: number;
   totalLoss: number;
@@ -44,11 +43,6 @@ const userSchema = new Schema<IUser>(
     profileImage: { 
       type: String, 
       default: '/images/option1.webp',
-      required: true 
-    },
-    lastPlayed: { 
-      type: Date,
-      default: Date.now, 
       required: true 
     },
     overallScore: { 

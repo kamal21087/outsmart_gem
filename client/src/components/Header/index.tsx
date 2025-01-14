@@ -53,7 +53,7 @@ const Header = () => {
                     </li>
                     <li>
                       <Link
-                        to="/profile"
+                        to="/me"
                         className="dropdown-item"
                         onClick={() => setDropdownOpen(false)}
                       >

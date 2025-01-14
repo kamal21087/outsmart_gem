@@ -84,7 +84,6 @@ const resolvers = {
       try {
       const user = await User.create({ ...input,
         profileImage: '/images/option1.webp', 
-        lastPlayed: new Date(), 
         overallScore: 0, 
         totalWins: 0, 
         totalLoss: 0,  
@@ -191,20 +190,23 @@ const resolvers = {
     
     updateProfileImage: async (_: any, { profileImage }: { profileImage: string }, context: any) => {
       if (context.user) {
+        console.log('Context User:', context.user); // Log the context user object
+        const userId = context.user.id || context.user._id; // Use the appropriate field
+        console.log('User ID:', userId);
+    
         try {
           const updatedUser = await User.findByIdAndUpdate(
-            context.user._id,
+            userId,
             { profileImage },
             { new: true }
           );
-          console.log('Updated User Profile Image:', updatedUser); // Debug log
-
-          // Check if updatedUser is null
+          console.log('Updated User Profile Image:', updatedUser);
+    
           if (!updatedUser) {
-            console.error('User not found for ID:', context.user._id);
-            throw new Error(`User not found for ID: ${context.user._id}`);
+            console.error('User not found for ID:', userId);
+            throw new Error(`User not found for ID: ${userId}`);
           }
-
+    
           return updatedUser;
         } catch (error) {
           console.error('Error updating profile image:', error);
@@ -212,7 +214,7 @@ const resolvers = {
         }
       }
       throw new AuthenticationError('You need to be logged in!');
-    },
+    }    
   },
 };
 

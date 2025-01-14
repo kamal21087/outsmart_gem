@@ -35,7 +35,7 @@ const ProfilePage: React.FC = () => {
   // State for managing the current and new profile images
   const [profileImage, setProfileImage] = useState<string>('');
   const [newProfileImage, setNewProfileImage] = useState<string>('');
-
+  const [unsavedChanges, setUnsavedChanges] = useState<boolean>(false);
 
   // Set the initial profile image when user profile data is loaded
   useEffect(() => {
@@ -48,25 +48,34 @@ const ProfilePage: React.FC = () => {
   // Handle the selection of a new profile image
   const handleImageSelect = (newImage: string) => {
     setNewProfileImage(newImage);
+    setProfileImage(newImage);
+    setUnsavedChanges(true); // Indicate unsaved changes
   };
 
   // Save the changes to the profile image by updating the server
-  const handleSaveChanges = () => {
-    if (newProfileImage && userId) {
-      setProfileImage(newProfileImage); // Update the profile image in the state
-      updateProfileImage({
-        variables: { profileImage: newProfileImage },
-        context: {
-          headers: {
-            Authorization: `Bearer ${AuthService.getToken()}`,
-          },
-        },
-      }).then(() => {
-        // Refetch user data after updating profile image
-        refetchUserData();
-      });
-    }
-  };
+  const handleSaveChanges = async () => { 
+    if (newProfileImage && userId) { 
+      try { 
+        console.log('Saving new profile image:', newProfileImage); // Debug log 
+
+        const token = AuthService.getToken(); 
+        console.log('Token:', token);
+
+        const response = await updateProfileImage({ 
+          variables: { profileImage: newProfileImage }, 
+          context: { 
+            headers: { Authorization: `Bearer ${AuthService.getToken()}`, 
+          }, 
+        }, 
+      }); 
+      console.log('Profile image updated successfully:', response.data); // Debug log 
+      setUnsavedChanges(false); // Reset unsaved changes 
+      refetchUserData(); 
+    } catch (error) { 
+      console.error('Error saving profile image:', error); 
+    } 
+  } 
+};
 
   // Display loading or error messages if necessary
   if (!userId) return <p>Please sign in to view your profile.</p>;
@@ -82,35 +91,54 @@ const ProfilePage: React.FC = () => {
     <div className="profile-page columns">
       <div className="column is-one-third">
         <div className="profile-image">
-          <h2>Select Your Profile Image</h2>
+          <h2 className="title">Select Your Profile Image</h2>
           <img src={profileImage} alt="Profile" />
           <div className="image-options">
             {/* Options for selecting a new profile image */}
-            <img src="/images/option1.webp" alt="Option 1" onClick={() => handleImageSelect('/images/option1.webp')} />
-            <img src="/images/option2.webp" alt="Option 2" onClick={() => handleImageSelect('/images/option2.webp')} />
-            <img src="/images/option3.webp" alt="Option 3" onClick={() => handleImageSelect('/images/option3.webp')} />
-            <img src="/images/option4.webp" alt="Option 4" onClick={() => handleImageSelect('/images/option4.webp')} />
-            <img src="/images/option5.webp" alt="Option 5" onClick={() => handleImageSelect('/images/option5.webp')} />
-            <img src="/images/option6.webp" alt="Option 6" onClick={() => handleImageSelect('/images/option6.webp')} />
-            <img src="/images/option7.webp" alt="Option 7" onClick={() => handleImageSelect('/images/option7.webp')} />
-            <img src="/images/option8.webp" alt="Option 8" onClick={() => handleImageSelect('/images/option8.webp')} />
-            <img src="/images/option9.webp" alt="Option 9" onClick={() => handleImageSelect('/images/option9.webp')} />
+            <img src="/images/option1.webp" alt="Option 1" 
+              className={newProfileImage === '/images/option1.webp' ? 'selected' : ''}
+              onClick={() => handleImageSelect('/images/option1.webp')} />
+            <img src="/images/option2.webp" alt="Option 2" 
+              className={newProfileImage === '/images/option2.webp' ? 'selected' : ''}
+              onClick={() => handleImageSelect('/images/option2.webp')} />
+            <img src="/images/option3.webp" alt="Option 3" 
+              className={newProfileImage === '/images/option3.webp' ? 'selected' : ''}
+              onClick={() => handleImageSelect('/images/option3.webp')} />
+            <img src="/images/option4.webp" alt="Option 4" 
+              className={newProfileImage === '/images/option4.webp' ? 'selected' : ''}
+              onClick={() => handleImageSelect('/images/option4.webp')} />
+            <img src="/images/option5.webp" alt="Option 5" 
+              className={newProfileImage === '/images/option5.webp' ? 'selected' : ''}
+              onClick={() => handleImageSelect('/images/option5.webp')} />
+            <img src="/images/option6.webp" alt="Option 6" 
+              className={newProfileImage === '/images/option6.webp' ? 'selected' : ''}
+              onClick={() => handleImageSelect('/images/option6.webp')} />
+            <img src="/images/option7.webp" alt="Option 7" 
+              className={newProfileImage === '/images/option7.webp' ? 'selected' : ''}
+              onClick={() => handleImageSelect('/images/option7.webp')} />
+            <img src="/images/option8.webp" alt="Option 8" 
+              className={newProfileImage === '/images/option8.webp' ? 'selected' : ''}
+              onClick={() => handleImageSelect('/images/option8.webp')} />
+            <img src="/images/option9.webp" alt="Option 9" 
+              className={newProfileImage === '/images/option9.webp' ? 'selected' : ''}
+              onClick={() => handleImageSelect('/images/option9.webp')} />
           </div>
-          <button className="button is-primary" onClick={handleSaveChanges}>Save Changes</button>
+          <button className={`button save-changes ${unsavedChanges ? 'unsaved' : ''}`} 
+            onClick={handleSaveChanges} disabled={!unsavedChanges} > 
+            Save Changes </button>
           <button className="button is-primary">Game History</button>
         </div>
       </div>
       <div className="column is-two-thirds">
         {userDetails && (
           <div className="profile-info box">
-            <h2 className="title">{userDetails.username}</h2>
+            <h2 className="title"><strong>Username:  </strong>{userDetails.username}</h2>
             <p><strong>Account Created:</strong> {userDetails.accountCreated}</p>
             <p><strong>Email:</strong> {userDetails.email}</p>
             <p><strong>Overall Score:</strong> {userDetails.overallScore}</p>
             <p><strong>Wins:</strong> {userDetails.totalWins}</p>
             <p><strong>Losses:</strong> {userDetails.totalLoss}</p>
             <p><strong>High Score:</strong> {userDetails.highScore}</p>
-            <p><strong>Last Played:</strong> {userDetails.lastPlayed}</p>
           </div>
         )}
       </div>
