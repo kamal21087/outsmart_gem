@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 import formatQuestion from '../utils/formatQuestion.js';
-import { User, Gamelog, UserProfile } from '../models/index.js';
+import { User, Gamelog } from '../models/index.js';
 import { signToken, AuthenticationError } from '../utils/auth.js';
 
 // Define types for the arguments
@@ -34,40 +34,27 @@ const resolvers = {
   Query: {
     me: async (_parent: any, _args: any, context: any) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('thoughts');
+        return User.findOne({ _id: context.user._id });
       }
       throw new AuthenticationError('Could not authenticate user.');
     },
-    
-    getUserProfile: async (_parent: any, { id }:any, context:any) => {
+
+    getUserData: async (_parent: any, { id }: any, context: any) => {
       if (context.user) {
         try {
-          const userProfile = await UserProfile.findById(id);
-          console.log('UserProfile:', userProfile); // Debug log
-          return userProfile;
+          // Fetch user data
+          const userData = await User.findById(id);
+          console.log('UserData:', userData); // Debug log
+
+          return userData;
         } catch (error) {
-          console.error('Error fetching user profile:', error);
-          throw new Error('Error fetching user profile');
+          console.error('Error fetching user data and profile:', error);
+          throw new Error('Error fetching user data and profile');
         }
       }
       throw new AuthenticationError('Could not authenticate user.');
     },
 
-    getUserData: async (_parent:any, { id }:any, context:any) => {
-      if (context.user) {
-        try {
-          const userData = await User.findById(id);
-          console.log('UserData:', userData); // Debug log
-          return userData;
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-          throw new Error('Error fetching user data');
-        }
-      }
-      throw new AuthenticationError('Could not authenticate user.');
-    },
-    
-    // Resolver for getting current user avatar
     getUserAvatar: async (_parent: any, _args: any, context: any) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id }).select('profileImage');
@@ -90,15 +77,26 @@ const resolvers = {
       }
       throw new AuthenticationError('User is not authenticated.');
     },
-  
   },
 
   Mutation: {
     addUser: async (_parent: any, { input }: AddUserArgs) => {
-      const user = await User.create({ ...input });
+      try {
+      const user = await User.create({ ...input,
+        profileImage: '/images/option1.webp', 
+        lastPlayed: new Date(), 
+        overallScore: 0, 
+        totalWins: 0, 
+        totalLoss: 0,  
+        highScore: 0,
+       });
       const token = signToken(user.username, user.email, user._id);
       return { token, user };
+    } catch (error) { 
+      console.error('Error adding user:', error); 
+      throw new Error('Error adding user'); }
     },
+
     login: async (_parent: any, { email, password }: LoginUserArgs) => {
       const user = await User.findOne({ email });
       if (!user) {
@@ -114,12 +112,9 @@ const resolvers = {
       return { token, user };
     },
 
-    // Mutation for sending a question to Gemini
     askGemini: async (_parent: any, question: any) => {
       try {
-
         const apiKey = process.env.GEMINI_API_KEY;
-        
         const formattedQuestion = formatQuestion(question?.question);
 
         const response = await axios.post(
@@ -148,6 +143,7 @@ const resolvers = {
         throw new Error('Failed to send data to the external API.');
       }
     },
+
     addGamelog: async (_parent: any, { input }: AddGamelogArgs, context: any) => {
       if (context.user) {
         console.log('Context User:', context.user); // Debug log
@@ -161,9 +157,9 @@ const resolvers = {
 
         const update = {
           $inc: {
-            cumulativeScore: score || 0,
-            wins: results === 'W' ? 1 : 0,
-            losses: results === 'L' ? 1 : 0,
+            overallScore: score || 0,
+            totalWins: results === 'W' ? 1 : 0,
+            totalLoss: results === 'L' ? 1 : 0,
           },
         };
 
@@ -178,23 +174,32 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
     
-    updateProfileImage: async (
-      _: any,
-      { userName, profileImage }: { userName: string; profileImage: string }
-    ) => {
-      try {
-        const userProfile = await UserProfile.findOneAndUpdate(
-          { userName },
-          { profileImage },
-          { new: true }
-        );
-        return userProfile;
-      } catch (error) {
-        console.error('Error updating profile image:', error);
-        throw new Error('Error updating profile image');
+    updateProfileImage: async (_: any, { profileImage }: { profileImage: string }, context: any) => {
+      if (context.user) {
+        try {
+          const updatedUser = await User.findByIdAndUpdate(
+            context.user._id,
+            { profileImage },
+            { new: true }
+          );
+          console.log('Updated User Profile Image:', updatedUser); // Debug log
+
+          // Check if updatedUser is null
+          if (!updatedUser) {
+            console.error('User not found for ID:', context.user._id);
+            throw new Error(`User not found for ID: ${context.user._id}`);
+          }
+
+          return updatedUser;
+        } catch (error) {
+          console.error('Error updating profile image:', error);
+          throw new Error('Error updating profile image');
+        }
       }
+      throw new AuthenticationError('You need to be logged in!');
     },
   },
 };
 
 export default resolvers;
+
