@@ -7,12 +7,17 @@ const typeDefs = `#graphql
     username: String!
     email: String!
     accountCreated: Date!
+    profileImage: String! 
+    lastPlayed: String! 
+    overallScore: Int! 
+    totalWins: Int! 
+    totalLoss: Int! 
+    highScore: Int!
   }
 
   # Gamelog type representing a user's gameplay session
   type Gamelog {
     _id: ID!
-    username: String!
     userQuestions: [String]
     aiResponses: [String]
     results: String!
@@ -21,15 +26,15 @@ const typeDefs = `#graphql
     playerId: ID!
   }
   
-  type UserProfile { 
-  username: String!
-  profileImage: String! 
-  lastPlayed: String! 
-  overallScore: Int! 
-  totalWins: Int! 
-  totalLoss: Int! 
-  highScore: Int!
-  }
+  # type UserProfile { 
+  # username: String!
+  # profileImage: String! 
+  # lastPlayed: String! 
+  # overallScore: Int! 
+  # totalWins: Int! 
+  # totalLoss: Int! 
+  # highScore: Int!
+  # }
 
   # Input type for creating a new user
   input UserInput {
@@ -57,8 +62,8 @@ const typeDefs = `#graphql
     users: [User!]!
     user(username: String!): User
     me: User
-    getUserProfile(userName: String!): UserProfile
-    getUserData(userName: String!): User
+    # getUserProfile(username: String!): UserProfile
+    getUserData(id: ID!): User
     getUserAvatar: String!
     getLoggedInUsername: String!
   }
@@ -69,7 +74,7 @@ const typeDefs = `#graphql
     login(email: String!, password: String!): Auth
     askGemini(question: String!): String!
     addGamelog(input: AddGamelogInput!): Gamelog
-    updateProfileImage(userName: String!, profileImage: String!): UserProfile
+    updateProfileImage(id: ID!, profileImage: String!): User
   }
 `;
 

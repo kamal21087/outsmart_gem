@@ -1,40 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { UserProfile } from '../interfaces/UserProfile';
 import { UserData } from '../interfaces/UserData';
-import { GET_USER_PROFILE, GET_USER_DATA } from '../utils/queries';
+import { GET_USER_DATA } from '../utils/queries';
 import { UPDATE_PROFILE_IMAGE } from '../utils/mutations';
 import './ProfilePage.css'; // Import your custom CSS
 import AuthService from '../utils/auth';
 
-// Component for rendering the profile page
 const ProfilePage: React.FC = () => {
+  console.log('ProfilePage component loaded'); // Component load log
+
   const userAuthData = AuthService.getProfile();
   console.log('User Auth Data:', userAuthData); // Add console log
   const userId = userAuthData?.data?.id;
   console.log('User ID:', userId); // Add console log
 
-  // Fetch the user profile data
-  const { 
-      data: userProfileQueryData, 
-      loading: loadingProfile, 
-      error: errorProfile, 
-      refetch: refetchUserProfile } 
-    = useQuery(GET_USER_PROFILE, {
-      variables: { id: userId }, 
-      skip: !userId,
-  });
-
   // Fetch the user data
-  const { 
-      data: userDataQueryData, 
-      loading: loadingData, 
-      error: errorData, 
-      refetch: refetchUserData } 
-    = useQuery(GET_USER_DATA, {
-      variables: { id: userId }, 
-      skip: !userId,
+  const {
+    data: userDataQueryData,
+    loading: loadingData,
+    error: errorData,
+    refetch: refetchUserData,
+  } = useQuery(GET_USER_DATA, {
+    variables: { id: userId },
+    skip: !userId,
   });
+  //const {data} = useQuery (GET_USER_DATA, {variables: {id: userId}});
+  //console.log(data);
+  
 
   // Mutation for updating the profile image
   const [updateProfileImage] = useMutation(UPDATE_PROFILE_IMAGE);
@@ -43,13 +35,14 @@ const ProfilePage: React.FC = () => {
   const [profileImage, setProfileImage] = useState<string>('');
   const [newProfileImage, setNewProfileImage] = useState<string>('');
 
+
   // Set the initial profile image when user profile data is loaded
   useEffect(() => {
-    if (userProfileQueryData) {
-      const userImage = userProfileQueryData.getUserProfile?.profileImage || '/images/option1.jpg';
+    if (userDataQueryData) {
+      const userImage = userDataQueryData.getUserData.profileImage || '/images/option1.webp';
       setProfileImage(userImage);
     }
-  }, [userProfileQueryData]);
+  }, [userDataQueryData]);
 
   // Handle the selection of a new profile image
   const handleImageSelect = (newImage: string) => {
@@ -61,10 +54,14 @@ const ProfilePage: React.FC = () => {
     if (newProfileImage && userId) {
       setProfileImage(newProfileImage); // Update the profile image in the state
       updateProfileImage({
-        variables: { id: userId, profileImage: newProfileImage },
+        variables: { profileImage: newProfileImage },
+        context: {
+          headers: {
+            Authorization: `Bearer ${AuthService.getToken()}`,
+          },
+        },
       }).then(() => {
-        // Refetch user profile data after updating profile image
-        refetchUserProfile();
+        // Refetch user data after updating profile image
         refetchUserData();
       });
     }
@@ -72,15 +69,11 @@ const ProfilePage: React.FC = () => {
 
   // Display loading or error messages if necessary
   if (!userId) return <p>Please sign in to view your profile.</p>;
-  if (loadingProfile || loadingData) return <p>Loading...</p>;
- 
-  if (errorProfile) return <p>Error loading profile</p>;
-  if (errorData) return <p>Error loading Data</p>;
+  if (loadingData) return <p>Loading...</p>;
+  if (errorData) return <p>Error loading data</p>;
 
   // Extract user profile and user data
-  const userProfile: UserProfile = userProfileQueryData.getUserProfile;
-  const userDetails: UserData = userDataQueryData.getUserData;
-  console.log(userProfileQueryData);
+  const userDetails: UserData | null = userDataQueryData?.getUserData ?? null;
   console.log(userDataQueryData);
 
   // Render the profile page
@@ -107,16 +100,16 @@ const ProfilePage: React.FC = () => {
         </div>
       </div>
       <div className="column is-two-thirds">
-        {userProfile && userDetails && (
+        {userDetails && (
           <div className="profile-info box">
             <h2 className="title">{userDetails.username}</h2>
             <p><strong>Account Created:</strong> {userDetails.accountCreated}</p>
             <p><strong>Email:</strong> {userDetails.email}</p>
-            <p><strong>Overall Score:</strong> {userProfile.overallScore}</p>
-            <p><strong>Wins:</strong> {userProfile.totalWins}</p>
-            <p><strong>Losses:</strong> {userProfile.totalLoss}</p>
-            <p><strong>High Score:</strong> {userProfile.highScore}</p>
-            <p><strong>Last Played:</strong> {userProfile.lastPlayed}</p>
+            <p><strong>Overall Score:</strong> {userDetails.overallScore}</p>
+            <p><strong>Wins:</strong> {userDetails.totalWins}</p>
+            <p><strong>Losses:</strong> {userDetails.totalLoss}</p>
+            <p><strong>High Score:</strong> {userDetails.highScore}</p>
+            <p><strong>Last Played:</strong> {userDetails.lastPlayed}</p>
           </div>
         )}
       </div>
@@ -125,3 +118,4 @@ const ProfilePage: React.FC = () => {
 };
 
 export default ProfilePage;
+

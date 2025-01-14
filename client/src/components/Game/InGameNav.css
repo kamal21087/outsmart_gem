@@ -20,13 +20,15 @@
     border-right: 1px solid gray;
     flex-grow: 1;
     margin-right: 5%;
+    user-select: none;
 }
 
 .ingame-nav-element:last-child {
     border-right: none;
 }
 
-.ingame-nav-element:hover {
+.hoverable:hover {
     color: #cddd49;
     cursor: pointer;
 }
+

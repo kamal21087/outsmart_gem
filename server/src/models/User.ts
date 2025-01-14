@@ -8,6 +8,12 @@ interface IUser extends Document {
   password: string;
   accountCreated: Date;
   isCorrectPassword(password: string): Promise<boolean>;
+  profileImage: string;
+  lastPlayed: Date;
+  overallScore: number;
+  totalWins: number;
+  totalLoss: number;
+  highScore: number;
 }
 
 // Define the schema for the User document
@@ -35,6 +41,36 @@ const userSchema = new Schema<IUser>(
       default: Date.now, // Automatically sets the account creation date
       required: true,
     },
+    profileImage: { 
+      type: String, 
+      default: '/images/option1.webp',
+      required: true 
+    },
+    lastPlayed: { 
+      type: Date,
+      default: Date.now, 
+      required: true 
+    },
+    overallScore: { 
+      type: Number, 
+      default: 0,
+      required: true 
+    },
+    totalWins: { 
+      type: Number, 
+      default: 0,
+      required: true 
+    },
+    totalLoss: { 
+      type: Number, 
+      default: 0,
+      required: true 
+    },
+    highScore: { 
+      type: Number, 
+      default: 0,
+      required: true
+    }
   },
   {
     timestamps: true,
