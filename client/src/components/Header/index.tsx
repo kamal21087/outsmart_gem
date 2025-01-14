@@ -32,7 +32,7 @@ const Header = () => {
             profile && profile.data ? (
               <>
                 <span className="username-display">{profile.data.username}</span>
-                <div className="dropdown">
+                <div className="dropdown is-right">
                   <button
                     className="hamburger"
                     onClick={toggleDropdown}

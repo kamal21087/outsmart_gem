@@ -1,5 +1,5 @@
 /* Welcome Message */
-.welcome-message {
+.guesswho-container .welcome-message {
     font-family: 'Bangers', cursive; /* Custom Bangers font */
     font-size: 3rem; /* Larger text for emphasis */
     text-align: center;

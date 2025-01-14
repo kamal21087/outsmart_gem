@@ -128,7 +128,7 @@ const GuessWhoGame = () => {
   };
 
   return (
-    <div>
+    <div className='guesswho-container'>
       <h1 className='welcome-message'>Guess Who</h1>
       <InGameNav remainingQuestions={guesses} />
             
