@@ -22,10 +22,11 @@ const ProfilePage: React.FC = () => {
     refetch: refetchUserData,
   } = useQuery(GET_USER_DATA, {
     variables: { id: userId },
+    fetchPolicy:'network-only',
     skip: !userId,
   });
-  //const {data} = useQuery (GET_USER_DATA, {variables: {id: userId}});
-  //console.log(data);
+  // const {data} = useQuery (GET_USER_DATA, {variables: {id: userId}, fetchPolicy:'network-only'});
+  // console.log(data);
   
 
   // Mutation for updating the profile image
@@ -39,7 +40,7 @@ const ProfilePage: React.FC = () => {
   // Set the initial profile image when user profile data is loaded
   useEffect(() => {
     if (userDataQueryData) {
-      const userImage = userDataQueryData.getUserData.profileImage || '/images/option1.webp';
+      const userImage = userDataQueryData.getUserData.profileImage || '../../images/option1.webp';
       setProfileImage(userImage);
     }
   }, [userDataQueryData]);

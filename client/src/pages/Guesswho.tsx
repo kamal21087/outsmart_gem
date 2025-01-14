@@ -2,7 +2,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { useState, useEffect, useRef } from 'react';
 
 import { ASK_GEMINI, ADD_GAMELOG } from '../utils/mutations';
-import { GET_LOGGED_IN_USERNAME, GET_USER_AVATAR, } from '../utils/queries';
+import { GET_LOGGED_IN_USERNAME, GET_USER_AVATAR, GET_USER_DATA } from '../utils/queries';
 
 import './Guesswho.css';
 
@@ -30,10 +30,10 @@ const GuessWhoGame = () => {
   const displayName = data?.getLoggedInUsername || 'Guest';
   const { data: userAvatarData } = useQuery(GET_USER_AVATAR);
   const userAvatar = userAvatarData?.getUserAvatar || '../../images/option1.webp';
-  const aiAvatar = '../../public/images/option0.webp';
+  const aiAvatar = '../../images/option0.webp';
 
   const [askGemini, { loading, error }] = useMutation(ASK_GEMINI);
-  const [addGamelog] = useMutation(ADD_GAMELOG);
+  const [addGamelog] = useMutation(ADD_GAMELOG,{refetchQueries:[{query: GET_USER_DATA}]});
 
   const [qnAList, setQnAList] = useState<questionAndResponse[]>([]);
   const [gameResult, setGameResult] = useState(false);
