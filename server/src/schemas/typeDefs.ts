@@ -18,7 +18,6 @@ const typeDefs = `#graphql
   # Gamelog type representing a user's gameplay session
   type Gamelog {
     _id: ID!
-    username: String!
     userQuestions: [String]
     aiResponses: [String]
     results: String!

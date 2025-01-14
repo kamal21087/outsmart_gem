@@ -27,7 +27,8 @@ const Home = () => {
             {/* Game Box 1 */}
             <div
               className="game-box"
-              onClick={() => handleGameClick('/guesswho/play')}
+              onClick={() => handleGameClick('/guesswho/landing')}
+
             >
               <p>GUESS WHO</p>
             </div>

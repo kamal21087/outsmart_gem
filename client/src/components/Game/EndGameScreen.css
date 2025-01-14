@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Delius+Unicase:wght@400;700&family=Indie+Flower&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Reddit+Mono:wght@200..900&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap');
+
+p {
+    font-family: 'Zain', cursive;
+    font-size: 18pt;
+    color: #616161;
+}
+
+.end-game-screen {
+    position: fixed;
+    top: 50%; /* Move to the middle vertically */
+    left: 50%; /* Move to the middle horizontally */
+    transform: translate(-50%, -50%); /* Adjust for the element's size */
+    background-color: rgba(255, 255, 255, 0.814);
+    padding: 20px;
+    text-align: center;
+    border: 2px solid #cddd49;
+    width: 60vw;
+    height: min-content;
+    border-radius: 5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .ifwin-declaration {
+    font-family: 'Zain', cursive;
+    font-size: 32pt;
+    color: #0bc59d;
+  }
+
+  .iflose-declaration {
+    font-family: 'Zain', cursive;
+    font-size: 32pt;
+    color: #ff4d4d;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    gap: 20px;
+  }
+
+  .play-again-button {
+    font-family: 'Zain', cursive;
+    font-size: 18pt;
+    color: #616161;
+    background-color: #dfec99;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 35%;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .play-again-button:hover {
+    background-color: #cddd49; /* Change color on hover */
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .return-home-button {
+    font-family: 'Zain', cursive;
+    font-size: 18pt;
+    color: #616161;
+    background-color: #dfec99;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 35%;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .return-home-button:hover {
+    background-color: #cddd49; /* Change color on hover */
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+  }

@@ -146,10 +146,11 @@ const resolvers = {
 
     addGamelog: async (_parent: any, { input }: AddGamelogArgs, context: any) => {
       if (context.user) {
-        // Create a new game log entry
+        console.log('Context User:', context.user); // Debug log
+        //Create a new game log entry
         const gamedata = await Gamelog.create({
           ...input,
-          playerId: context.user._id,
+          playerId: context.user.id,
         });
 
         const { score, results } = input;
