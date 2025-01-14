@@ -21,7 +21,7 @@ function areStringsCloseEnough(
   ): boolean {
     // Helper function: Calculate Levenshtein Distance
     const levenshteinDistance = (a: string, b: string): number => {
-      const matrix: number[][] = Array.from({ length: a.length + 1 }, (_, i) =>
+      const matrix: number[][] = Array.from({ length: a.length + 1 }, (_) =>
         Array(b.length + 1).fill(0)
       );
   
