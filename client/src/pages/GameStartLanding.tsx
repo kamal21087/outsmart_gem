@@ -24,10 +24,8 @@ const GamePage: React.FC = () => {
 
   return (
     <div className="game-page-container">
-      <div className="title-wrapper">
-        <h1 className="title-left">GUESS WHO</h1>
-        <h1 className="title-center">HIGHSCORE</h1>
-      </div>
+      <h1 className="welcome-message">GUESS WHO</h1>
+      
 
       <div className="content-wrapper">
         {/* Left Block */}
@@ -42,6 +40,9 @@ const GamePage: React.FC = () => {
 
         {/* Right Block */}
         <div className="high-score-container">
+          <div className="title-wrapper">
+            <h1 className="title-center">HIGHSCORE</h1>
+          </div>
           <div className="high-score-box">
             {highScores.map((player, index) => (
               <div key={index} className="high-score-item">
@@ -57,6 +58,7 @@ const GamePage: React.FC = () => {
 
       {/* User Ranking */}
       <div className="user-ranking-section">
+        
         <div className="user-ranking-star">
           <div className="star">
             <span>{userRank}</span>
@@ -67,9 +69,9 @@ const GamePage: React.FC = () => {
 
       {/* How to Play Modal */}
       <div className={`modal ${isModalActive ? 'is-active' : ''}`}>
-        <div className="modal-background" onClick={handleToggleModal}></div>
+        <div onClick={handleToggleModal}></div>
         <div className="modal-content">
-          <div className="box">
+          <div>
             <GuessWhoRules display={isModalActive} onClose={handleToggleModal} />
           </div>
         </div>

@@ -11,7 +11,7 @@ function GameLoseScreen({ maxGuesses, answer, resetData }: GameLoseScreenProps) 
     
     return (
         <div className="end-game-screen">
-            <h2 className="ifwin-declaration">BETTER LUCK NEXT TIME!</h2>
+            <h2 className="iflose-declaration">BETTER LUCK NEXT TIME!</h2>
             <p>You were not able to "Guess Who?" within {maxGuesses} questions. Answer: {answer}"</p>
             <p className="cursive">Better luck next time!</p>
             <div className="button-container">

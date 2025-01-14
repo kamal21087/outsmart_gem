@@ -29,12 +29,12 @@ const GuessWhoGame = () => {
   const [rulesDisplay, setRulesDisplay] = useState(false);
 
   const { data } = useQuery(GET_LOGGED_IN_USERNAME);
-  const displayName = data?.getLoggedInUsername || 'Guest';
-  console.log('displayName:', displayName);
-  const { data: userAvatarData } = useQuery(GET_USER_AVATAR);
   const { data: userData } = useQuery(GET_USERNAME_AVATAR);
-  console.log('userData:', userData); 
-  const userAvatar = userAvatarData?.getUserAvatar || '../../images/option1.webp';
+
+  console.log('userData:', userData?.me?.profileImage);
+
+  const displayName = userData?.me?.username || 'Guest';
+  const userAvatar = userData?.me?.profileImage || '../../images/option1.webp';
   const aiAvatar = '../../images/option0.webp';
 
   const [askGemini, { loading, error }] = useMutation(ASK_GEMINI);
