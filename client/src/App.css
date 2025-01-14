@@ -23,31 +23,65 @@ body, html {
 
 /* Header Styles */
 .header {
-  background-color: #ffffff; /* Pure white background */
-  color: #000000; /* Black text */
+  background-color: #ffffff;
+  color: #000000;
   padding: 1rem 0;
-  border-bottom: 1px solid #e0e0e0; /* Subtle border for separation */
+  border-bottom: 1px solid #e0e0e0;
   position: sticky;
   top: 0;
-  z-index: 1000; /* Ensure header stays above other content */
+  z-index: 1000;
 }
 
 .header-container {
   display: flex;
-  justify-content: flex-end; /* Default alignment */
+  justify-content: space-between; /* Space between left and right sections */
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
 }
 
+/* Specific Header Adjustment for GuessWho Page */
+.header-special {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align logo to the left */
+}
+
+.header-guesswho {
+  padding-left: 1rem; /* Add space for the logo */
+}
+
+.header-title-left {
+  margin-right: auto; /* Push other elements to the right */
+}
+
+.header-title-link {
+  font-family: 'Bangers', cursive;
+  font-size: 1.5rem;
+  color: #000000;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.header-title-link:hover {
+  color: #b5f77d; /* Light green */
+}
+
+/* Right Section */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Space between username and menu */
+}
+
 /* Username Display */
 .username-display {
   font-family: 'Open Sans', sans-serif;
   font-size: 1rem;
-  color: #4a4a4a; /* Dark gray */
+  color: #4a4a4a;
   text-decoration: underline;
-  margin-right: 1rem;
+  text-align: right;
 }
 
 /* Hamburger Button */
@@ -68,16 +102,16 @@ body, html {
 /* Dropdown Menu */
 .dropdown-menu {
   position: absolute;
-  top: 2.5rem; /* Adjust based on header height */
+  top: 2.5rem;
   right: 0;
-  background-color: #ffffff; /* White dropdown background */
-  border: 1px solid #e0e0e0; /* Light gray border */
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
   border-radius: 4px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   list-style: none;
   margin: 0;
   padding: 0;
-  width: 150px; /* Adjust width as needed */
+  width: 150px;
   z-index: 1000;
   display: none;
 }
@@ -95,42 +129,53 @@ body, html {
   color: #000000;
   cursor: pointer;
   display: block;
-  background-color: #ffffff; /* White background */
+  background-color: #ffffff;
   border-bottom: 1px solid #e0e0e0;
 }
 
 .dropdown-item:last-child {
-  border-bottom: none; /* Remove border from the last item */
+  border-bottom: none;
 }
 
 .dropdown-item:hover {
-  background-color: #f7f7f7; /* Light gray on hover */
+  background-color: #f7f7f7;
 }
 
 .dropdown-item:active {
-  background-color: #e0e0e0; /* Slightly darker gray when clicked */
+  background-color: #e0e0e0;
 }
 
-/* Mobile View Adjustments */
+/* Adjustments for Mobile View */
 @media screen and (max-width: 768px) {
   .header-container {
-    justify-content: center; /* Center-align items */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;
+  }
+
+  .header-right {
+    margin-top: 1rem;
+    flex-direction: column;
   }
 
   .username-display {
-    margin-right: 0; /* Remove margin for centering */
-    text-align: center; /* Center text */
+    text-align: center;
   }
 
-  .hamburger {
-    margin-left: 1rem; /* Add space to separate from username */
+  .dropdown-menu {
+    top: 3rem;
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .dropdown-item {
+    text-align: center;
   }
 }
 
 /* Login Button */
 .login-button {
-  background-color: #e0e0e0; /* Light gray */
-  color: #000000; /* Black text */
+  background-color: #e0e0e0;
+  color: #000000;
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 4px;
@@ -142,16 +187,17 @@ body, html {
 }
 
 .login-button:hover {
-  background-color: #d6d6d6; /* Slightly darker gray */
+  background-color: #d6d6d6;
 }
 
 /* Footer Styles */
 .footer {
-  background-color: #e0e0e0;
-  color: #000000;
+  padding: 1rem !important;
+  background-color: #e0e0e0; /* Light gray background */
+  color: #000000; /* Black text */
   text-align: center;
-  padding: 1rem 0;
-  font-size: 0.875rem;
+  font-size: 0.875rem; /* Readable text size */
+  line-height: 1.2; /* Adjust line height for spacing */
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -164,5 +210,5 @@ body, html {
 }
 
 .footer a:hover {
-  color: #333333; /* Darker shade on hover */
+  color: #333333; /* Slightly darker hover color */
 }
