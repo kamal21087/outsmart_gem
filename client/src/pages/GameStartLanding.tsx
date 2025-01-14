@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; 
-import './StartLanding.css'; // Import custom CSS
-import 'bulma/css/bulma.min.css'; // Import Bulma CSS
+import { Link } from 'react-router-dom';
+import './StartLanding.css';
+import 'bulma/css/bulma.min.css';
 import GuessWhoRules from '../components/Game/GuessWhoRules';
-import AuthService from '../utils/auth'; // Import AuthService for authentication
+import AuthService from '../utils/auth';
 
 const GamePage: React.FC = () => {
   const userAuthData = AuthService.getProfile();
@@ -13,19 +13,59 @@ const GamePage: React.FC = () => {
   const handleToggleModal = () => {
     setIsModalActive(!isModalActive);
   };
-  //Don't believe this is needed bc the user can't get here without being auth but adding just in case
-  if (!userName) return <p>Please sign in to start the game!</p>;
+
+  // Dummy data for high scores
+  const highScores = [
+    { username: 'Player1', score: 150 },
+    { username: 'Player2', score: 130 },
+    { username: 'Player3', score: 110 },
+  ];
+  const userRank = 4;
 
   return (
-    <div className="game-page">
-      <section className="section main-content">
-        <div className="container">
-          <h2 className="title">Welcome, {userName}</h2>
-          <p className="subtitle">Click the button below to start the game.</p>
-          <Link to="/guesswho/play" className="button is-primary">Start Game</Link>
-          <button className="button is-info" onClick={handleToggleModal}>How to Play</button>
+    <div className="game-page-container">
+      <div className="title-wrapper">
+        <h1 className="title-left">GUESS WHO</h1>
+        <h1 className="title-center">HIGHSCORE</h1>
+      </div>
+
+      <div className="content-wrapper">
+        {/* Left Block */}
+        <div className="game-info">
+          <Link to="/guesswho/play" className="game-button">
+            START
+          </Link>
+          <button className="game-button" onClick={handleToggleModal}>
+            HOW TO PLAY
+          </button>
         </div>
-      </section>
+
+        {/* Right Block */}
+        <div className="high-score-container">
+          <div className="high-score-box">
+            {highScores.map((player, index) => (
+              <div key={index} className="high-score-item">
+                <div className="star">
+                  <span>{index + 1}</span>
+                </div>
+                {player.username} - {player.score}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* User Ranking */}
+      <div className="user-ranking-section">
+        <div className="user-ranking-star">
+          <div className="star">
+            <span>{userRank}</span>
+          </div>
+          <p className="user-ranking-username">{userName}</p>
+        </div>
+      </div>
+
+      {/* How to Play Modal */}
       <div className={`modal ${isModalActive ? 'is-active' : ''}`}>
         <div className="modal-background" onClick={handleToggleModal}></div>
         <div className="modal-content">
@@ -33,7 +73,11 @@ const GamePage: React.FC = () => {
             <GuessWhoRules display={isModalActive} onClose={handleToggleModal} />
           </div>
         </div>
-        <button className="modal-close is-large" aria-label="close" onClick={handleToggleModal}></button>
+        <button
+          className="modal-close is-large"
+          aria-label="close"
+          onClick={handleToggleModal}
+        ></button>
       </div>
     </div>
   );
