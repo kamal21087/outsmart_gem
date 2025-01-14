@@ -42,3 +42,12 @@ export const GET_LOGGED_IN_USERNAME = gql`
     getLoggedInUsername
   }
 `;
+
+export const GET_USERNAME_AVATAR = gql`
+  query me {
+    me {
+      username
+      profileImage
+    }
+  }
+`;

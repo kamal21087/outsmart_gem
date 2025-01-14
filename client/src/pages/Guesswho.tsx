@@ -2,13 +2,14 @@ import { useMutation, useQuery } from '@apollo/client';
 import { useState, useEffect, useRef } from 'react';
 
 import { ASK_GEMINI, ADD_GAMELOG } from '../utils/mutations';
-import { GET_LOGGED_IN_USERNAME, GET_USER_AVATAR, GET_USER_DATA } from '../utils/queries';
+import { GET_LOGGED_IN_USERNAME, GET_USER_AVATAR, GET_USER_DATA, GET_USERNAME_AVATAR } from '../utils/queries';
 
 import './Guesswho.css';
 
-import InGameNav from '../components/Game/InGameNav';
 import ChatCloud from '../components/ChatBox/ChatCloud';
 import EndGameScreen from '../components/Game/EndGameScreen';
+
+import GuessWhoRules from ".././components/Game/GuessWhoRules";
 import animalsList from '../utils/animalsList';
 import pickRandom from '../utils/pickRandom';
 import findCloseEnough from '../utils/areStringsCloseEnough';
@@ -25,11 +26,15 @@ const GuessWhoGame = () => {
   console.log('Prompt:', baseText);
   const [question, setQuestion] = useState('');
   const [guesses, setGuess] = useState(maxGuesses);
+  const [rulesDisplay, setRulesDisplay] = useState(false);
 
   const { data } = useQuery(GET_LOGGED_IN_USERNAME);
-  const displayName = data?.getLoggedInUsername || 'Guest';
-  const { data: userAvatarData } = useQuery(GET_USER_AVATAR);
-  const userAvatar = userAvatarData?.getUserAvatar || '../../images/option1.webp';
+  const { data: userData } = useQuery(GET_USERNAME_AVATAR);
+
+  console.log('userData:', userData?.me?.profileImage);
+
+  const displayName = userData?.me?.username || 'Guest';
+  const userAvatar = userData?.me?.profileImage || '../../images/option1.webp';
   const aiAvatar = '../../images/option0.webp';
 
   const [askGemini, { loading, error }] = useMutation(ASK_GEMINI);
@@ -116,7 +121,6 @@ const GuessWhoGame = () => {
 
   useEffect(() => {
     if (guesses === 0) {
-      alert('Game Over! Starting a new game.');
       gameLost(qnAList);
     }
   }, [guesses]);
@@ -128,9 +132,15 @@ const GuessWhoGame = () => {
   };
 
   return (
-    <div>
-      <h1 className='welcome-message'>Guess Who</h1>
-      <InGameNav remainingQuestions={guesses} />
+    <div className='guesswho-container'>
+      <div className='welcome-title-container'>
+        <h1 className='welcome-message'>Guess Who</h1>
+        <div className='button-container' onClick={() => 
+                    setRulesDisplay(!rulesDisplay)}>
+          <button className='how-to-play-button' >?</button>
+        </div>
+      </div>
+      {/* <InGameNav remainingQuestions={guesses} /> */}
             
       <div className='chat-container'>
         <ul>
@@ -145,6 +155,11 @@ const GuessWhoGame = () => {
       </div>
       
       <div className='chat-entry-container' onKeyDown={handleKeyPress}>
+      <p className='questions-left-text'>
+        {qnAList.length === 0 && "Ask a Yes/No Question. "}
+        You have {guesses} questions left.
+      </p>
+
         <img className="chat-entry-avatar" src={userAvatar} alt="user avatar" />
 
         <textarea
@@ -158,7 +173,9 @@ const GuessWhoGame = () => {
 
         {error && <p>Error: {error.message}</p>}
       </div>
-
+      
+      { /* Display the rules popup if rulesDisplay is true */ }
+      <GuessWhoRules display={rulesDisplay} onClose={() => setRulesDisplay(false)} />
 
       {/* Hidden until game ends */}
       {gameEnd && (<EndGameScreen gameResult={ gameResult } guesses={guesses} maxGuesses={maxGuesses} points={Math.round(guesses / maxGuesses * 100)} answer={finalAnswer} resetData={resetData}/>)}

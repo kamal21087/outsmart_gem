@@ -1,35 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Cherry+Bomb+One&family=Iceland&family=Indie+Flower&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap');
+
 /* General Layout */
 .game-page-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
   background-color: #ffffff;
   font-family: 'Open Sans', sans-serif;
-  padding: 2rem;
+  margin: 20px;
 }
 
 /* Title Wrapper */
 .title-wrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
   max-width: 1200px;
   margin-bottom: 2rem;
 }
 
-.title-left {
-  font-family: 'Bangers', cursive;
-  font-size: 2.5rem;
-  color: #000000; /* Black color */
+.game-page-container .welcome-message {
+  font-family: 'Bangers', cursive; /* Custom Bangers font */
+  font-size: 3rem; /* Larger text for emphasis */
+  text-align: center;
+  color: #1a1a1a; /* Black text color */
+  margin-bottom: 0;
+  margin-top: 20px;
+  pointer-events: none;
+  user-select: none;
 }
 
 .title-center {
   font-family: 'Bangers', cursive;
   font-size: 2.5rem;
   color: #1c7c54; /* Dark green */
-  transform: translateX(-30px);
 }
 
 /* Content Wrapper */
@@ -40,23 +45,26 @@
   width: 100%;
   max-width: 1200px;
   gap: 2rem; /* Space between blocks */
+  margin-top: 7%;
+  height: 40vh;
 }
 
 /* Left Block */
 .game-info {
   display: flex;
   flex-direction: column;
-  align-items: stretch; /* Buttons take full width */
-  justify-content: flex-start;
+  align-items: center; /* Buttons take full width */
+  justify-content: center;
+  height: 100%;
   width: 45%;
 }
 
 .game-button {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1.5rem;
-  color: #000000; /* Black text */
+  font-family: "Zain";
+  font-size: 24pt;
+  color: #383838; /* Black text */
   background-color: #dfec99; /* Light yellow-green */
-  border: 2px solid #000000; /* Black border for definition */
+  box-shadow: 0 4px 8px rgba(104, 156, 59, 0.322);
   border-radius: 8px;
   padding: 0.75rem 1.5rem;
   margin-bottom: 1rem;
@@ -67,10 +75,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 80%;
 }
 
 .game-button:hover {
-  background-color: #b5f77d; /* Light green */
+  background-color: rgb(181, 247, 125); /* Light green */
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Right Block */
@@ -79,15 +89,18 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  background-color: #fafafa;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
   width: 45%;
+  padding: 20px;
 }
 
 .high-score-box {
   width: 100%;
-  border: 2px solid #000000; /* Black border */
+  
   padding: 1rem;
   border-radius: 8px;
-  background-color: #ffffff; /* White background */
   text-align: center;
 }
 

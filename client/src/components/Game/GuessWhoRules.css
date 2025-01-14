@@ -1,0 +1,50 @@
+
+/* How to Play CSS */
+.rules-popup {
+    position: fixed;
+    left: 50%;
+    top:25%;
+    padding: 30px;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    background-color: rgb(255, 255, 255, 0.95);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+    height: 50vh !important;
+    z-index: 10;
+    border-radius: 25px;
+    transform: translateX(-50%);
+}
+
+.close-button-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.close-button {
+    background: none;
+    font-family: 'Iceland', 'Zain', Arial, sans-serif;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #858585;
+    display: block;
+    visibility: visible;
+    opacity: 1;
+}
+
+.close-button:hover { 
+    color: lightgreen; 
+}
+
+.rules-section {
+    list-style-type: disc; /* Add bullet points */
+    margin-left: 20px;     
+    padding: 0;
+}
+
+.rules-section li {
+    margin-bottom: 10px; /* Add space between each list item */
+}
