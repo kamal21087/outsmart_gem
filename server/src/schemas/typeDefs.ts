@@ -8,7 +8,6 @@ const typeDefs = `#graphql
     email: String!
     accountCreated: Date!
     profileImage: String! 
-    lastPlayed: String! 
     overallScore: Int! 
     totalWins: Int! 
     totalLoss: Int! 
@@ -29,7 +28,6 @@ const typeDefs = `#graphql
   # type UserProfile { 
   # username: String!
   # profileImage: String! 
-  # lastPlayed: String! 
   # overallScore: Int! 
   # totalWins: Int! 
   # totalLoss: Int! 
@@ -74,7 +72,7 @@ const typeDefs = `#graphql
     login(email: String!, password: String!): Auth
     askGemini(question: String!): String!
     addGamelog(input: AddGamelogInput!): Gamelog
-    updateProfileImage(id: ID!, profileImage: String!): User
+    updateProfileImage(profileImage: String!): User
   }
 `;
 

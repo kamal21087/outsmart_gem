@@ -4,7 +4,6 @@ export interface UserData {
   email: string | null;
   accountCreated: string;
   profileImage: string;
-  lastPlayed: string;
   overallScore: number;
   totalWins: number;
   totalLoss: number;

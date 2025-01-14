@@ -4,7 +4,6 @@
 // interface IUserProfile extends Document {
 //   username: string;
 //   profileImage: string;
-//   lastPlayed: Date;
 //   overallScore: number;
 //   totalWins: number;
 //   totalLoss: number;
@@ -20,11 +19,6 @@
 
 //   profileImage: { 
 //     type: String, 
-//     required: true },
-
-//   lastPlayed: { 
-//     type: Date,
-//     default: Date.now, 
 //     required: true },
 
 //   overallScore: { 

@@ -38,3 +38,18 @@
 .button {
   margin-top: 10px;
 }
+
+.button.save-changes {
+  background-color: #28a745;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.button.save-changes.unsaved {
+  background-color: #ffc107; /* Warning color for unsaved changes */
+}
+
+.button.save-changes:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

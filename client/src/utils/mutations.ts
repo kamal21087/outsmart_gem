@@ -29,8 +29,9 @@ export const ADD_USER = gql`
 
 // Mutation to update the profile image
 export const UPDATE_PROFILE_IMAGE = gql`
-  mutation updateProfileImage($userName: String!, $profileImage: String!) {
-    updateProfileImage(userName: $userName, profileImage: $profileImage) {
+  mutation UpdateProfileImage($profileImage: String!) {
+    updateProfileImage(profileImage: $profileImage) {
+      _id
       profileImage
     }
   }
