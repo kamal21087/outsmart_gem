@@ -46,7 +46,7 @@ export const ASK_GEMINI = gql`
 export const ADD_GAMELOG = gql`
   mutation AddGamelog($input: AddGamelogInput!) {
     addGamelog(input: $input) {
-      id
+      _id
       userQuestions
       aiResponses
       results
