@@ -1,53 +1,189 @@
-@import 'https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css';
-
-.game-page {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.header, .footer {
-  background-color: #f5f5f5;
-  padding: 1rem;
-  text-align: center;
-}
-
-.main-content {
-  flex: 1;
+/* General Layout */
+.game-page-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-height: 100vh;
+  background-color: #ffffff;
+  font-family: 'Open Sans', sans-serif;
+  padding: 2rem;
 }
 
-.title {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.subtitle {
-  font-size: 1.25rem;
+/* Title Wrapper */
+.title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
   margin-bottom: 2rem;
 }
 
-.button {
-  background-color: #3273dc;
-  border: none;
-  color: white;
-  font-size: 1.25rem;
+.title-left {
+  font-family: 'Bangers', cursive;
+  font-size: 2.5rem;
+  color: #000000; /* Black color */
+}
+
+.title-center {
+  font-family: 'Bangers', cursive;
+  font-size: 2.5rem;
+  color: #1c7c54; /* Dark green */
+  transform: translateX(-30px);
+}
+
+/* Content Wrapper */
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1200px;
+  gap: 2rem; /* Space between blocks */
+}
+
+/* Left Block */
+.game-info {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* Buttons take full width */
+  justify-content: flex-start;
+  width: 45%;
+}
+
+.game-button {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.5rem;
+  color: #000000; /* Black text */
+  background-color: #dfec99; /* Light yellow-green */
+  border: 2px solid #000000; /* Black border for definition */
+  border-radius: 8px;
   padding: 0.75rem 1.5rem;
-  margin: 0.5rem; /* Added margin to space out buttons */
+  margin-bottom: 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.button.is-info {
-  background-color: #209cee;
+.game-button:hover {
+  background-color: #b5f77d; /* Light green */
 }
 
-.modal .modal-background {
-  background-color: rgba(10, 10, 10, 0.86);
+/* Right Block */
+.high-score-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 45%;
 }
 
-.modal .modal-content {
-  background-color: white;
-  padding: 2rem;
+.high-score-box {
+  width: 100%;
+  border: 2px solid #000000; /* Black border */
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #ffffff; /* White background */
+  text-align: center;
+}
+
+.high-score-item {
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+  color: #333333; /* Dark gray */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.star {
+  background-color: #b5f77d; /* Light green */
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  ); /* Star shape */
+  color: #000000; /* Black text */
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+/* User Ranking Section */
+.user-ranking-section {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-ranking-star {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; /* Space between star and username */
+}
+
+.user-ranking-username {
+  font-size: 1.25rem;
+  font-family: 'Open Sans', sans-serif;
+  color: #000000; /* Black text */
+}
+
+/* Mobile Adjustments */
+@media screen and (max-width: 768px) {
+  .title-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .content-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .game-info,
+  .high-score-container {
+    width: 90%;
+  }
+
+  .game-button {
+    font-size: 1.25rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .high-score-title {
+    font-size: 1.5rem;
+  }
+
+  .high-score-item {
+    font-size: 1rem;
+  }
+
+  .star {
+    width: 40px;
+    height: 40px;
+    font-size: 0.875rem;
+  }
+
+  .user-ranking-username {
+    font-size: 1.125rem;
+  }
 }

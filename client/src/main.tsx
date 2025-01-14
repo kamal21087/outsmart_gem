@@ -35,7 +35,7 @@ const router = createBrowserRouter([
         element: <Profile />
       },
       {
-        path: '/guesswho/landing',
+        path: '/guesswho',
         element: <GameStartLanding/>
       },
       {
