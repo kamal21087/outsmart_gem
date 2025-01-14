@@ -24,15 +24,6 @@ const typeDefs = `#graphql
     createdAt: String! 
     playerId: ID!
   }
-  
-  # type UserProfile { 
-  # username: String!
-  # profileImage: String! 
-  # overallScore: Int! 
-  # totalWins: Int! 
-  # totalLoss: Int! 
-  # highScore: Int!
-  # }
 
   # Input type for creating a new user
   input UserInput {
