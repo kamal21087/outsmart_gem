@@ -1,7 +1,5 @@
-// import { Navigate } from 'react-router-dom';
-
 import { useMutation, useQuery } from '@apollo/client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import { ASK_GEMINI, ADD_GAMELOG } from '../utils/mutations';
 import { GET_LOGGED_IN_USERNAME, GET_USER_AVATAR, } from '../utils/queries';
@@ -13,6 +11,7 @@ import ChatCloud from '../components/ChatBox/ChatCloud';
 import EndGameScreen from '../components/Game/EndGameScreen';
 import animalsList from '../utils/animalsList';
 import pickRandom from '../utils/pickRandom';
+import findCloseEnough from '../utils/areStringsCloseEnough';
 
 interface questionAndResponse {
     question: string;
@@ -20,10 +19,10 @@ interface questionAndResponse {
 }
 
 const GuessWhoGame = () => {
-  const maxGuesses = 20;
+  const maxGuesses = 10;
   const [finalAnswer, setFinalAnswer] = useState(() => pickRandom(animalsList));
   const baseText = `We are playing a Guess Who game with the final answer being ${finalAnswer}. You should answer with a yes/no response. `;
-
+  console.log('Prompt:', baseText);
   const [question, setQuestion] = useState('');
   const [guesses, setGuess] = useState(maxGuesses);
 
@@ -40,6 +39,8 @@ const GuessWhoGame = () => {
   const [gameResult, setGameResult] = useState(false);
   const [gameEnd, setGameEnd] = useState(false);
 
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
   const handleAsk = async () => {
     // Check if the question is empty
     if (!question.trim()) {
@@ -49,23 +50,21 @@ const GuessWhoGame = () => {
 
     try {
         const prompt = baseText + question;
-        console.log('Prompt:', prompt);
 
         const { data } = await askGemini({
             variables: { question: prompt },
         });
-        console.log(data);
 
         const newQnA = { question, answer: data.askGemini };
-        setQnAList([...qnAList, newQnA]);
+        const updatedQnAList = [...qnAList, newQnA];
 
-        if (question.includes(finalAnswer)) {
+        if (findCloseEnough(finalAnswer, question)) {
           setGameResult(true);
-          restartGame();
+          gameWon(updatedQnAList);
           return;
         }
 
-        console.log(qnAList);
+        setQnAList(updatedQnAList);
         setQuestion(''); // Clear the question input
         setGuess(guesses - 1); // Decrement the number of guesses
     } catch (err: any) {
@@ -73,15 +72,14 @@ const GuessWhoGame = () => {
     }
   };
 
-  const handleAddGamelog = async () => {
+  const handleAddGamelog = async (updatedQnAList:questionAndResponse[], ifWin:boolean) => {
     try {
-      const input = JSON.stringify({
-        userQuestions: qnAList.map((qa) => qa.question),
-        aiResponses: qnAList.map((qa) => qa.answer),
-        results: gameResult ? 'W' : 'L',
-        score: Math.round((maxGuesses - guesses) / maxGuesses * 100),
-      });
-      console.log('Gamelog input:', input);
+      const input = {
+        userQuestions: updatedQnAList.map((qa) => qa.question),
+        aiResponses: updatedQnAList.map((qa) => qa.answer),
+        results: ifWin ? 'W' : 'L',
+        score: Math.round(guesses / maxGuesses * 100),
+      };
       await addGamelog({
         variables: { input },
       });
@@ -90,21 +88,44 @@ const GuessWhoGame = () => {
     }
   }
 
-  const restartGame = () => {
+  const gameLost = (updatedQnAList:questionAndResponse[]) => {
+    setGameEnd(true);
+    handleAddGamelog(updatedQnAList, false);
+  };
+
+  const gameWon = (updatedQnAList:questionAndResponse[]) => {
+    setGameEnd(true);
+    handleAddGamelog(updatedQnAList, true);
+  };
+
+  const resetData = () => {
+    setGameEnd(false);
     setGuess(maxGuesses);
     setQnAList([]);
-    setGameEnd(true);
-    handleAddGamelog();
     setFinalAnswer(pickRandom(animalsList));
-  };
+    setGameResult(false);
+  }
+
+  const scrollToBottom = () => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [qnAList]);  
 
   useEffect(() => {
     if (guesses === 0) {
       alert('Game Over! Starting a new game.');
-      setGameResult(false);
-      restartGame();
+      gameLost(qnAList);
     }
   }, [guesses]);
+
+  const handleKeyPress = (e:any) => {
+    if (e.key === 'Enter') {
+      handleAsk();
+    }
+  };
 
   return (
     <div>
@@ -120,9 +141,10 @@ const GuessWhoGame = () => {
             </li>
           ))}
         </ul>
+        <div ref={chatEndRef}></div>
       </div>
       
-      <div className='chat-entry-container'>
+      <div className='chat-entry-container' onKeyDown={handleKeyPress}>
         <img className="chat-entry-avatar" src={userAvatar} alt="user avatar" />
 
         <textarea
@@ -139,7 +161,7 @@ const GuessWhoGame = () => {
 
 
       {/* Hidden until game ends */}
-      {gameEnd && (<EndGameScreen gameResult={ gameResult } />)}
+      {gameEnd && (<EndGameScreen gameResult={ gameResult } guesses={guesses} maxGuesses={maxGuesses} points={Math.round(guesses / maxGuesses * 100)} answer={finalAnswer} resetData={resetData}/>)}
     </div>
   );
 };
