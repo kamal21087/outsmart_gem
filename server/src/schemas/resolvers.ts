@@ -34,7 +34,7 @@ const resolvers = {
   Query: {
     me: async (_parent: any, _args: any, context: any) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id });
+        return User.findOne({ _id: context.user.id });
       }
       throw new AuthenticationError('Could not authenticate user.');
     },
@@ -154,6 +154,18 @@ const resolvers = {
         });
 
         const { score, results } = input;
+        console.log(results);
+        
+        // Fetch user data to get the current high score 
+        const user = await User.findById(context.user.id); 
+        if (!user) 
+          { throw new Error('User not found'); 
+          }
+        
+          console.log('Current High Score:', user.highScore);
+        // Determine if the new score is higher than the current high score 
+        const newHighScore = score > user.highScore ? score : user.highScore; 
+        console.log('New High Score:', newHighScore);
 
         const update = {
           $inc: {
@@ -161,10 +173,13 @@ const resolvers = {
             totalWins: results === 'W' ? 1 : 0,
             totalLoss: results === 'L' ? 1 : 0,
           },
+          highScore: newHighScore,
         };
+        console.log(update);
+        
 
         await User.findOneAndUpdate(
-          { _id: context.user._id },
+          { _id: context.user.id },
           update,
           { new: true }
         );
