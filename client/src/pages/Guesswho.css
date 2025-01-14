@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Cherry+Bomb+One&family=Iceland&family=Indie+Flower&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap');
+
+
 /* Welcome Message */
 .guesswho-container .welcome-message {
     font-family: 'Bangers', cursive; /* Custom Bangers font */
@@ -8,6 +11,42 @@
     margin-top: 20px;
     pointer-events: none;
     user-select: none;
+}
+
+.welcome-title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 15px;
+}
+
+.welcome-title-container .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: #616161 dotted 2px;
+    transform: translateY(8px);
+    border-radius: 15%;
+    transition: border 0.3s ease, transform 0.2s ease-in-out;;
+}
+
+.welcome-title-container .button-container:hover {
+    border: #cddd49 dotted 2px;
+    cursor: pointer;
+}
+
+.how-to-play-button {
+  font-family: 'Cherry Bomb One', cursive; /* Custom Cherry Bomb One font */
+  font-size: 32pt;
+  color: #616161;
+  transform: translateY(-3px);
+}
+
+.how-to-play-button:hover {
+  color: #cddd49;
 }
 
 .chat-container {
@@ -23,6 +62,17 @@
   width: 100%;
   left: 0;
   bottom: 10%;
+}
+
+.questions-left-text {
+  position: absolute;
+  top: -25px;
+  font-family: 'Zain', Arial, sans-serif; /* Use a modern font */
+  font-size: 14pt;
+  color: #616161;
+  right: 15%;
+  cursor: default;
+  user-select: none;
 }
 
 .chat-entry-avatar {

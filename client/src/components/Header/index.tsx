@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Auth from '../../utils/auth';
 import '../../App.css'; // Corrected path
+import { useNavigate } from 'react-router-dom'; // Corrected path
 
 const Header = () => {
   // const location = useLocation();
@@ -15,6 +16,8 @@ const Header = () => {
   };
 
   const profile = Auth.getProfile();
+
+  const navigate = useNavigate(); // Corrected path
 
   return (
     <header className="header">
@@ -31,7 +34,7 @@ const Header = () => {
           {Auth.loggedIn() ? (
             profile && profile.data ? (
               <>
-                <span className="username-display">{profile.data.username}</span>
+                <span className="username-display" onClick={() => navigate('./me')}>{profile.data.username}</span>
                 <div className="dropdown is-right">
                   <button
                     className="hamburger"
@@ -53,7 +56,7 @@ const Header = () => {
                     </li>
                     <li>
                       <Link
-                        to="/profile"
+                        to="/me"
                         className="dropdown-item"
                         onClick={() => setDropdownOpen(false)}
                       >
