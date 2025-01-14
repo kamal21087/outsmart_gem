@@ -1,5 +1,5 @@
 import React from 'react';
-import './GuaessHowRules.css/'
+import './GuessWhoRules.css/'
 
 interface GuessWhoRulesInput {
   display: boolean;
@@ -11,9 +11,11 @@ const GuessWhoRules: React.FC<GuessWhoRulesInput> = ({ display, onClose }) => {
 
   return (
     <div className="rules-popup box">
-      <button className="delete exit-button" onClick={onClose}></button>
-      <br></br>
-      <h2 className="title is-4">How To Play</h2>
+      <div className='close-button-container'>
+        <h2 className="title is-4">How To Play</h2>
+        <button className="close-button" onClick={onClose}>X</button>
+      </div>
+      
       <ul className="rules-section">
         <li>The objective of the game is to guess the identity of the bot Gem's mystery person, place, or thing within 20 questions.</li>
         <li>Only ask yes-or-no questions to narrow down the possibilities and guess the correct identity.</li>
