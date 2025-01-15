@@ -10,6 +10,7 @@
     font-weight: 500;
     color: #616161;
     margin-bottom: 0.5rem;
+    z-index: 10;
 }
 
 .chat-message {
@@ -23,6 +24,7 @@
     flex-direction: column;
     width: 10%;
     align-items: center;
+
 }
 
 .chat-avatar {
@@ -50,3 +52,32 @@
     margin-right: 13%;
     border: 2px dotted rgb(187, 187, 187);
 }
+
+@media screen and (max-width: 768px) {
+    .welcome-title-container {
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+    .user-identity {
+        width: 60px;
+        margin: 0 30px;
+    }
+    .chat-cloud {
+        margin: 0;
+    }
+    .chat-username {
+        margin: 0;
+    }
+    .message-right {
+        margin-left: 15%;
+        margin-right: 0;
+    }
+    .message-left {
+        margin-left: 0;
+        margin-right: 15%;
+    }
+    .chat-message {
+        font-size: 14pt;
+        transform: translateY(-12px);
+    }
+  }

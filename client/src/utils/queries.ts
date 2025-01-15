@@ -32,6 +32,14 @@ export const GET_USERNAME_AVATAR = gql`
   }
 `;
 
+export const GET_OVERALLSCORE = gql`
+  query getOverallScore {
+    me {
+      overallScore
+    }
+  }
+`;
+
 export const GET_LOGGED_IN_USERNAME = gql`
   query getLoggedInUsername {
     getLoggedInUsername
@@ -47,6 +55,15 @@ export const GET_USER_GAME_LOGS = gql`
       results
       score
       createdAt
+    }
+  }
+`;
+
+export const GET_HIGHSCORES = gql`
+  query topScorers {
+    topScorers {
+      username
+      overallScore
     }
   }
 `;

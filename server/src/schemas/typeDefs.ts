@@ -50,6 +50,7 @@ const typeDefs = `#graphql
   # Root Query type
   type Query {
     users: [User!]!
+    topScorers: [User!]!
     user(username: String!): User
     me: User
     getUserData(id: ID!): User

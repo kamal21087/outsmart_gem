@@ -17,7 +17,6 @@
   justify-content: center;
   width: 100%;
   max-width: 1200px;
-  margin-bottom: 2rem;
 }
 
 .game-page-container .welcome-message {
@@ -57,12 +56,14 @@
   justify-content: center;
   height: 100%;
   width: 45%;
+  gap: 1vh;
 }
 
 .game-button {
   font-family: "Zain";
-  font-size: 24pt;
-  color: #383838; /* Black text */
+  font-size: 18pt;
+  font-weight: 600;
+  color: #464646; /* Black text */
   background-color: #dfec99; /* Light yellow-green */
   box-shadow: 0 4px 8px rgba(104, 156, 59, 0.322);
   border-radius: 8px;
@@ -88,12 +89,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   background-color: #fafafa;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   width: 45%;
   padding: 20px;
+  height: 100%;
 }
 
 .high-score-box {
@@ -105,8 +107,8 @@
 }
 
 .high-score-item {
-  font-size: 1.25rem;
-  margin: 0.5rem 0;
+  font-family: 'Zain', sans-serif;
+  font-size: 1.7rem;
   color: #333333; /* Dark gray */
   display: flex;
   align-items: center;
@@ -138,9 +140,16 @@
   margin-right: 0.5rem;
 }
 
+.player-score {
+  font-family: 'Bangers', cursive;
+  font-weight: 800;
+  font-size: 5vh;
+  padding-left: 5px;
+}
+
 /* User Ranking Section */
 .user-ranking-section {
-  margin-top: 2rem;
+  margin-top: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -154,8 +163,8 @@
 }
 
 .user-ranking-username {
-  font-size: 1.25rem;
-  font-family: 'Open Sans', sans-serif;
+  font-size: 1.7rem;
+  font-family: 'Zain', 'Open Sans', sans-serif;
   color: #000000; /* Black text */
 }
 
@@ -199,4 +208,70 @@
   .user-ranking-username {
     font-size: 1.125rem;
   }
+}
+
+@media screen and (max-width: 768px) {
+  .header-container {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .header-right {
+    padding: 0;
+    margin: 0;
+  }
+
+  .hamburger {
+    padding: 0;
+  }
+  .game-button {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .user-ranking-section {
+    margin-top: 0;
+  }
+
+  .content-wrapper {
+    margin-top: 3%;
+    margin-bottom: 2%;
+  }
+
+  .game-info {
+    gap: 2vh;
+  }
+
+  .username-display {
+    display: none;
+  }
+
+  .title-center {
+    font-size: 2rem;
+  }
+
+  .high-score-title {
+    font-size: 1.25rem;
+  }
+
+  .high-score-item {
+    font-size: 2.5vh;
+  }
+
+  .game-button {
+    color: #494949;
+    font-size: 1.3rem;
+    font-weight: 800;
+  }
+
+  .star {
+    width: 30px;
+    height: 30px;
+    font-size: 0.75rem;
+  }
+
+  .user-ranking-username {
+    font-size: 3vh;
+  }
+  
 }
