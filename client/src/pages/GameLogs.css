@@ -1,3 +1,4 @@
+/* Container for the game logs page */
 .game-logs-container {
   display: flex;
   flex-direction: row;
@@ -7,10 +8,13 @@
   padding: 2rem;
 }
 
+/* User avatar and name section */
 .user-avatar-section {
   flex: 1;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .user-avatar {
@@ -18,30 +22,62 @@
   height: 150px;
   border-radius: 50%;
   border: 2px solid #ddd;
+  margin-bottom: 0.5rem;
 }
 
+.user-avatar-section p {
+  font-family: 'Caveat', cursive;
+  font-size: 1.5rem;
+  color: #555;
+}
+
+/* Logs section */
 .logs-section {
   flex: 2;
+  display: flex;
+  flex-direction: column;
 }
 
 .logs {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  overflow-y: auto; /* Allow scrolling for the whole logs section if needed */
+  max-height: 600px; /* Optional: Limit the height of the logs container */
 }
 
+/* Individual log card */
 .log-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  position: relative; /* Needed to position the delete button */
   background-color: #f9f9f9;
   padding: 1rem;
   border: 1px solid #ddd;
   border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-height: 200px; /* Limit the height of the log card */
+  overflow-y: auto; /* Enable vertical scrolling for long content */
 }
 
+/* Custom scrollbar for log cards */
+.log-card::-webkit-scrollbar {
+  width: 8px;
+}
+
+.log-card::-webkit-scrollbar-thumb {
+  background-color: #ccc; /* Scrollbar thumb color */
+  border-radius: 4px;
+}
+
+.log-card::-webkit-scrollbar-thumb:hover {
+  background-color: #bbb; /* Darker scrollbar thumb on hover */
+}
+
+/* Delete button styling */
 .delete-log-btn {
-  background-color: #e64c66;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: #555; /* Dark gray */
   color: #fff;
   border: none;
   border-radius: 50%;
@@ -56,11 +92,20 @@
 }
 
 .delete-log-btn:hover {
-  background-color: #c33e55;
+  background-color: #333; /* Darker gray on hover */
 }
 
+/* Text styling for log details */
+.log-details {
+  font-family: 'Caveat', cursive; /* Handwriting style font */
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+/* Header styling */
 h1 {
-  font-family: 'Bangers', cursive;
+  font-family: 'Bangers', cursive; /* Fun and bold font */
   font-size: 2rem;
   margin-bottom: 1rem;
   color: #333;
