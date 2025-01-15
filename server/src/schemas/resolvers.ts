@@ -77,6 +77,12 @@ const resolvers = {
       }
       throw new AuthenticationError('User is not authenticated.');
     },
+
+    topScorers: async (_parent: any, _args: any) => {
+      return User.find({}, { username: 1, overallScore: 1 })
+        .sort({ overallScore: -1 }) // Sort by `overallScore` in descending order
+        .limit(3); // Get the top 3 results
+    },
   },
 
   Mutation: {

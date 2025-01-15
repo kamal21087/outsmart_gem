@@ -2,7 +2,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { useState, useEffect, useRef } from 'react';
 
 import { ASK_GEMINI, ADD_GAMELOG } from '../utils/mutations';
-import { GET_LOGGED_IN_USERNAME, GET_USER_AVATAR, GET_USER_DATA, GET_USERNAME_AVATAR } from '../utils/queries';
+import { GET_USER_DATA, GET_USERNAME_AVATAR } from '../utils/queries';
 
 import './Guesswho.css';
 
@@ -28,7 +28,6 @@ const GuessWhoGame = () => {
   const [guesses, setGuess] = useState(maxGuesses);
   const [rulesDisplay, setRulesDisplay] = useState(false);
 
-  const { data } = useQuery(GET_LOGGED_IN_USERNAME);
   const { data: userData } = useQuery(GET_USERNAME_AVATAR);
 
   console.log('userData:', userData?.me?.profileImage);

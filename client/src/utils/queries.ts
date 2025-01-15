@@ -51,3 +51,12 @@ export const GET_USERNAME_AVATAR = gql`
     }
   }
 `;
+
+export const GET_HIGHSCORES = gql`
+  query topScorers {
+    topScorers {
+      username
+      highScore
+    }
+  }
+`;
