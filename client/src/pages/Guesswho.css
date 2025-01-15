@@ -147,3 +147,33 @@
   transform: translateY(-50%) scale(0.95); /* Slightly shrink on click */
 }
 
+.example-questions-container {
+  display: flex;
+  position: fixed;
+  text-align: right;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  bottom: 20vh;
+  gap: 15px;
+  right: 13%;
+}
+
+.example-questions-container .example-questions {
+  font-family: 'Zain', Arial, sans-serif; /* Use a modern font */
+  font-size: 16pt;
+  color: #616161;
+  margin-right: 10px;
+  cursor: default;
+  user-select: none;
+  background-color: #d6d6d6;
+  padding: 6px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+
+}
+
+.example-questions-container .example-questions:hover {
+  background-color: #575757;
+  color: #d6d6d6;
+}

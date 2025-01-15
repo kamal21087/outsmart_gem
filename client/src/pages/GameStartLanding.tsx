@@ -3,15 +3,12 @@ import { Link } from 'react-router-dom';
 import './StartLanding.css';
 import 'bulma/css/bulma.min.css';
 import GuessWhoRules from '../components/Game/GuessWhoRules';
-import AuthService from '../utils/auth';
 import { useQuery } from '@apollo/client';
 
 import { GET_HIGHSCORES } from '../utils/queries';
 import { GET_OVERALLSCORE } from '../utils/queries';
 
 const GamePage: React.FC = () => {
-  const userAuthData = AuthService.getProfile();
-  const userName = userAuthData?.data?.username;
   const [isModalActive, setIsModalActive] = useState(false);
   const {data: highscorers} = useQuery(GET_HIGHSCORES);
   const {data: userOverallScore} = useQuery(GET_OVERALLSCORE);

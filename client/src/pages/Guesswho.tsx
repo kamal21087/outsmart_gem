@@ -13,6 +13,7 @@ import GuessWhoRules from ".././components/Game/GuessWhoRules";
 import animalsList from '../utils/animalsList';
 import pickRandom from '../utils/pickRandom';
 import findCloseEnough from '../utils/areStringsCloseEnough';
+import getRandomQuestions from '../utils/getRandomQuestions';
 
 interface questionAndResponse {
     question: string;
@@ -43,23 +44,31 @@ const GuessWhoGame = () => {
   const [gameResult, setGameResult] = useState(false);
   const [gameEnd, setGameEnd] = useState(false);
 
+  const [exampleQuestions, setexampleQuestions] = useState(getRandomQuestions(5));
+
+  
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  const handleAsk = async () => {
+  const handleAsk = async (clickedQuestion? : string) => {
     // Check if the question is empty
-    if (!question.trim()) {
+    if (!question.trim() && !clickedQuestion) {
       alert('Please enter a valid question.');
       return;
     }
 
     try {
-        const prompt = baseText + question;
+        
+        const prompt = clickedQuestion ? baseText + clickedQuestion : baseText + question;
+
+        console.log('Prompt:', prompt);
 
         const { data } = await askGemini({
             variables: { question: prompt },
         });
 
-        const newQnA = { question, answer: data.askGemini };
+        const newQ = clickedQuestion ? clickedQuestion : question;
+
+        const newQnA = { question : newQ, answer: data.askGemini };
         const updatedQnAList = [...qnAList, newQnA];
 
         if (findCloseEnough(finalAnswer, question)) {
@@ -109,6 +118,7 @@ const GuessWhoGame = () => {
     setQnAList([]);
     setFinalAnswer(pickRandom(animalsList));
     setGameResult(false);
+    setexampleQuestions(getRandomQuestions(5));
   }
 
   const scrollToBottom = () => {
@@ -140,7 +150,6 @@ const GuessWhoGame = () => {
           <button className='how-to-play-button' >?</button>
         </div>
       </div>
-      {/* <InGameNav remainingQuestions={guesses} /> */}
             
       <div className='chat-container'>
         <ul>
@@ -155,10 +164,19 @@ const GuessWhoGame = () => {
       </div>
       
       <div className='chat-entry-container' onKeyDown={handleKeyPress}>
-      <p className='questions-left-text'>
-        {qnAList.length === 0 && "Ask a Yes/No Question. "}
-        You have {guesses} questions left.
-      </p>
+        
+        {qnAList.length === 0 && <div className='example-questions-container'>
+          {exampleQuestions.map((question, index) => (
+            <div key={index} className='example-questions' onClick={()=>handleAsk(question)}>
+              {question}
+            </div>
+          ))}
+        </div>}
+
+        <p className='questions-left-text'>
+          {qnAList.length === 0 && "Ask a Yes/No Question. "}
+          You have {guesses} questions left.
+        </p>
 
         <img className="chat-entry-avatar" src={userAvatar} alt="user avatar" />
 
@@ -169,7 +187,7 @@ const GuessWhoGame = () => {
           placeholder="Type your question here"
         />
 
-        <button className='chat-btn-submit' onClick={handleAsk} disabled={loading}> {loading ? '...' : '→'} </button>
+        <button className='chat-btn-submit' onClick={()=>handleAsk} disabled={loading}> {loading ? '...' : '→'} </button>
 
         {error && <p>Error: {error.message}</p>}
       </div>

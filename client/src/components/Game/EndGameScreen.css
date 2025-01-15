@@ -35,6 +35,10 @@
     color: #ff4d4d;
   }
 
+  .final-answer-text {
+    color: #ff4d4d;
+  }
+
   .end-game-screen .button-container {
     display: flex;
     justify-content: center;
