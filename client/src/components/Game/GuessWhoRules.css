@@ -48,3 +48,11 @@
 .rules-section li {
     margin-bottom: 10px; /* Add space between each list item */
 }
+
+@media screen and (max-width: 768px) {
+    .rules-popup {
+        width: 90%;
+        top: 20%;
+    }
+    
+}

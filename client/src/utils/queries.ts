@@ -52,11 +52,19 @@ export const GET_USERNAME_AVATAR = gql`
   }
 `;
 
+export const GET_OVERALLSCORE = gql`
+  query getOverallScore {
+    me {
+      overallScore
+    }
+  }
+`;
+
 export const GET_HIGHSCORES = gql`
   query topScorers {
     topScorers {
       username
-      highScore
+      overallScore
     }
   }
 `;

@@ -84,6 +84,7 @@ const GuessWhoGame = () => {
         results: ifWin ? 'W' : 'L',
         score: Math.round(guesses / maxGuesses * 100),
       };
+      console.log('Gamelog input:', JSON.stringify(input));
       await addGamelog({
         variables: { input },
       });
@@ -168,7 +169,7 @@ const GuessWhoGame = () => {
           placeholder="Type your question here"
         />
 
-        <button className='btn-submit' onClick={handleAsk} disabled={loading}> {loading ? '...' : '→'} </button>
+        <button className='chat-btn-submit' onClick={handleAsk} disabled={loading}> {loading ? '...' : '→'} </button>
 
         {error && <p>Error: {error.message}</p>}
       </div>
