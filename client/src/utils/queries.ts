@@ -1,19 +1,5 @@
 import { gql } from '@apollo/client';
 
-// Define the GraphQL query to get the user profile
-// export const GET_USER_PROFILE = gql`
-//   query getUserProfile($id: ID!) {
-//     getUserProfile(id: $id) {
-//       username
-//       profileImage
-//       overallScore
-//       totalWins
-//       totalLoss
-//       highScore
-//     }
-//   }
-// `;
-
 // Define the GraphQL query to get the user data
 export const GET_USER_DATA = gql`
   query getUserData($id: ID!) {
@@ -22,10 +8,10 @@ export const GET_USER_DATA = gql`
       username
       email
       accountCreated
-      profileImage 
-      overallScore 
-      totalWins 
-      totalLoss 
+      profileImage
+      overallScore
+      totalWins
+      totalLoss
       highScore
     }
   }
@@ -34,12 +20,6 @@ export const GET_USER_DATA = gql`
 export const GET_USER_AVATAR = gql`
   query getUserAvatar {
     getUserAvatar
-  }
-`;
-
-export const GET_LOGGED_IN_USERNAME = gql`
-  query getLoggedInUsername {
-    getLoggedInUsername
   }
 `;
 
@@ -60,11 +40,38 @@ export const GET_OVERALLSCORE = gql`
   }
 `;
 
+export const GET_LOGGED_IN_USERNAME = gql`
+  query getLoggedInUsername {
+    getLoggedInUsername
+  }
+`;
+
+export const GET_USER_GAME_LOGS = gql`
+  query getUserGameLogs($playerId: ID!) {
+    getUserGameLogs(playerId: $playerId) {
+      _id
+      userQuestions
+      aiResponses
+      results
+      score
+      createdAt
+    }
+  }
+`;
+
 export const GET_HIGHSCORES = gql`
   query topScorers {
     topScorers {
       username
       overallScore
+    }
+  }
+`;
+
+export const DELETE_GAME_LOG = gql`
+  mutation deleteGameLog($logId: ID!) {
+    deleteGameLog(logId: $logId) {
+      _id
     }
   }
 `;
