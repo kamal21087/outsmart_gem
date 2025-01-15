@@ -9,7 +9,6 @@ export const GET_USER_DATA = gql`
       email
       accountCreated
       profileImage
-      lastPlayed
       overallScore
       totalWins
       totalLoss
@@ -21,6 +20,15 @@ export const GET_USER_DATA = gql`
 export const GET_USER_AVATAR = gql`
   query getUserAvatar {
     getUserAvatar
+  }
+`;
+
+export const GET_USERNAME_AVATAR = gql`
+  query me {
+    me {
+      username
+      profileImage
+    }
   }
 `;
 
