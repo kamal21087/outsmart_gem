@@ -1,7 +1,7 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Types} from 'mongoose';
 
 interface IGamelog extends Document {
-    playerId: string;
+    playerId: Types.ObjectId;
     userQuestions: string[];
     aiResponses: string[];
     results: string;
@@ -12,7 +12,7 @@ interface IGamelog extends Document {
 const gamelogSchema = new Schema<IGamelog>(
     {
         playerId: {
-            type: String,
+            type: Schema.Types.ObjectId,
             required: true,
             trim: true,
         },
