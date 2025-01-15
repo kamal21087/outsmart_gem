@@ -39,7 +39,6 @@ const typeDefs = `#graphql
     aiResponses: [String!]!
     results: String!
     score: Int!
-    playerId: ID! # Include the player ID for linkage
   }
 
   # Auth type for authentication responses
@@ -57,7 +56,7 @@ const typeDefs = `#graphql
     getUserData(id: ID!): User
     getUserAvatar: String!
     getLoggedInUsername: String!
-    getUserGameLogs(playerId: ID!): [Gamelog!]! # Fetch all game logs for a specific user
+    getUserGameLogs(playerId: ID): [Gamelog!]! # Fetch all game logs for a specific user
   }
 
   # Root Mutation type
@@ -67,6 +66,7 @@ const typeDefs = `#graphql
     askGemini(question: String!): String!
     addGamelog(input: AddGamelogInput!): Gamelog
     updateProfileImage(profileImage: String!): User
+    deleteGameLog(logId: ID!): Gamelog # Delete a specific game log by ID
   }
 `;
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { UserData } from '../interfaces/UserData';
+import { useNavigate } from 'react-router-dom'; // Added import
 import { GET_USER_DATA } from '../utils/queries';
 import { UPDATE_PROFILE_IMAGE } from '../utils/mutations';
 import './ProfilePage.css'; // Import your custom CSS
@@ -8,6 +9,8 @@ import AuthService from '../utils/auth';
 
 const ProfilePage: React.FC = () => {
   console.log('ProfilePage component loaded'); // Component load log
+
+  const navigate = useNavigate(); // Initialize the navigate hook
 
   const userAuthData = AuthService.getProfile();
   console.log('User Auth Data:', userAuthData); // Add console log
@@ -126,7 +129,8 @@ const ProfilePage: React.FC = () => {
           <button className={`button save-changes ${unsavedChanges ? 'unsaved' : ''}`} 
             onClick={handleSaveChanges} disabled={!unsavedChanges} > 
             Save Changes </button>
-          <button className="button">Game History</button>
+          <button  className="button" onClick={() => navigate('/logs')}>
+          Game History</button>
         </div>
       </div>
       <div className="column is-two-thirds">

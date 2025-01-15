@@ -5,6 +5,7 @@ dotenv.config();
 import formatQuestion from '../utils/formatQuestion.js';
 import { User, Gamelog } from '../models/index.js';
 import { signToken, AuthenticationError } from '../utils/auth.js';
+import { Types } from 'mongoose';
 
 // Define types for the arguments
 interface AddUserArgs {
@@ -53,18 +54,25 @@ const resolvers = {
       throw new AuthenticationError('Could not authenticate user.');
     },
 
-    getUserGameLogs: async (_parent: any, { playerId }: { playerId: string }, context: any) => {
-      if (context.user) {
-        try {
-          const gameLogs = await Gamelog.find({ playerId });
-          console.log(`Game logs for playerId ${playerId}:`, gameLogs);
-          return gameLogs;
-        } catch (error) {
-          console.error('Error fetching game logs:', error);
-          throw new Error('Error fetching game logs');
-        }
+    getUserGameLogs: async (_parent: any, _args: any, context: any) => {
+      if (!context.user) {
+        throw new AuthenticationError("Unauthorized: User not authenticated.");
       }
-      throw new AuthenticationError('Could not authenticate user.');
+
+      try {
+        // Get the player's ID from context.user
+        const playerId = new Types.ObjectId(context.user.id);
+
+        // Fetch game logs for the player, sorted by dateCreated in descending order
+        const gameLogs = await Gamelog.find({ playerId })
+          .sort({ dateCreated: -1 }) // Sort by date descending
+          .exec();
+
+        return gameLogs;
+      } catch (error) {
+        console.error("Error fetching game logs:", error);
+        throw new Error("Failed to retrieve game logs.");
+      }
     },
 
     getUserAvatar: async (_parent: any, _args: any, context: any) => {
@@ -100,18 +108,20 @@ const resolvers = {
   Mutation: {
     addUser: async (_parent: any, { input }: AddUserArgs) => {
       try {
-      const user = await User.create({ ...input,
-        profileImage: '/images/option1.webp', 
-        overallScore: 0, 
-        totalWins: 0, 
-        totalLoss: 0,  
-        highScore: 0,
-       });
-      const token = signToken(user.username, user.email, user._id);
-      return { token, user };
-    } catch (error) { 
-      console.error('Error adding user:', error); 
-      throw new Error('Error adding user'); }
+        const user = await User.create({
+          ...input,
+          profileImage: '/images/option1.webp',
+          overallScore: 0,
+          totalWins: 0,
+          totalLoss: 0,
+          highScore: 0,
+        });
+        const token = signToken(user.username, user.email, user._id);
+        return { token, user };
+      } catch (error) {
+        console.error('Error adding user:', error);
+        throw new Error('Error adding user');
+      }
     },
 
     login: async (_parent: any, { email, password }: LoginUserArgs) => {
@@ -204,7 +214,7 @@ const resolvers = {
         console.log('Context User:', context.user); // Log the context user object
         const userId = context.user.id || context.user._id; // Use the appropriate field
         console.log('User ID:', userId);
-    
+
         try {
           const updatedUser = await User.findByIdAndUpdate(
             userId,
@@ -212,12 +222,12 @@ const resolvers = {
             { new: true }
           );
           console.log('Updated User Profile Image:', updatedUser);
-    
+
           if (!updatedUser) {
             console.error('User not found for ID:', userId);
             throw new Error(`User not found for ID: ${userId}`);
           }
-    
+
           return updatedUser;
         } catch (error) {
           console.error('Error updating profile image:', error);
@@ -225,7 +235,25 @@ const resolvers = {
         }
       }
       throw new AuthenticationError('You need to be logged in!');
-    }    
+    },
+
+    deleteGameLog: async (_parent: any, { logId }: { logId: string }, context: any) => {
+      if (!context.user) {
+        throw new AuthenticationError('Unauthorized: User not authenticated.');
+      }
+
+      try {
+        // Validate and delete the game log
+        const deletedLog = await Gamelog.findByIdAndDelete(logId);
+        if (!deletedLog) {
+          throw new Error('Game log not found.');
+        }
+        return deletedLog;
+      } catch (error) {
+        console.error('Error deleting game log:', error);
+        throw new Error('Failed to delete game log.');
+      }
+    },
   },
 };
 
