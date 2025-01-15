@@ -187,7 +187,7 @@ const GuessWhoGame = () => {
           placeholder="Type your question here"
         />
 
-        <button className='chat-btn-submit' onClick={()=>handleAsk} disabled={loading}> {loading ? '...' : '→'} </button>
+        <button className='chat-btn-submit' onClick={()=>handleAsk()} disabled={loading}> {loading ? '...' : '→'} </button>
 
         {error && <p>Error: {error.message}</p>}
       </div>
