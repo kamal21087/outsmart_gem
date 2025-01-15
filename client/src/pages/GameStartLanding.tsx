@@ -77,15 +77,15 @@ const GamePage: React.FC = () => {
       
 
       {/* How to Play Modal */}
-      <div className={`modal ${isModalActive ? 'is-active' : ''}`}>
+      <div>
         <div onClick={handleToggleModal}></div>
-        <div className="modal-content">
+        <div>
           <div>
             <GuessWhoRules display={isModalActive} onClose={handleToggleModal} />
           </div>
         </div>
         <button
-          className="modal-close is-large"
+          className="is-large"
           aria-label="close"
           onClick={handleToggleModal}
         ></button>
