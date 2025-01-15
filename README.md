@@ -56,9 +56,9 @@ Use as described in licenses terms and conditions.
 5. Start the development server: `npm run start:dev`
 
 ## Test
--Run the application locally
--Front End: Open your browser and go to http://localhost:3000.
--Back End: Open your browser and go to http://localhost:4000/graphql and use Apollo client. 
+- Run the application locally
+- Front End: Open your browser and go to http://localhost:3000.
+- Back End: Open your browser and go to http://localhost:4000/graphql and use Apollo client. 
 
 ## Contributing
 Kamal Uddin (kamal21087), Yang Gao (Nonatale) and Emily Gretsky (egretsky)
