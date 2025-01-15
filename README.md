@@ -52,7 +52,8 @@ Use as described in licenses terms and conditions.
 1. Clone the repository
 2. Install all dependencies: `npm run install`
 3. Update you `.env` in the `server` directory based on the `.env.example`
-4. Start the development server: `npm run start:dev`
+4. Build the application: `npm run build`
+5. Start the development server: `npm run start:dev`
 
 ## Test
 -Run the application locally
