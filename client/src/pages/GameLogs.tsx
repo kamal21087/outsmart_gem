@@ -2,11 +2,11 @@ import { useQuery, useMutation } from '@apollo/client';
 import { GET_USER_GAME_LOGS } from '../utils/queries';
 import { DELETE_GAME_LOG } from '../utils/mutations'; // Corrected import
 import AuthService from '../utils/auth';
-import { UserProfile } from '../interfaces/UserProfile';
+import { UserData } from '../interfaces/UserData';
 import './GameLogs.css';
 
 const GameLogs = () => {
-  const user = AuthService.getProfile()?.data as unknown as UserProfile | null;
+  const user = AuthService.getProfile()?.data as unknown as UserData | null;
 
   const { loading, error, data, refetch } = useQuery(GET_USER_GAME_LOGS, {
     variables: { playerId: user?.username },

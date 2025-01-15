@@ -126,19 +126,21 @@ const ProfilePage: React.FC = () => {
           <button className={`button save-changes ${unsavedChanges ? 'unsaved' : ''}`} 
             onClick={handleSaveChanges} disabled={!unsavedChanges} > 
             Save Changes </button>
-          <button className="button is-primary">Game History</button>
+          <button className="button">Game History</button>
         </div>
       </div>
       <div className="column is-two-thirds">
         {userDetails && (
           <div className="profile-info box">
-            <h2 className="title"><strong>Username:  </strong>{userDetails.username}</h2>
-            <p><strong>Account Created:</strong> {userDetails.accountCreated}</p>
-            <p><strong>Email:</strong> {userDetails.email}</p>
-            <p><strong>Overall Score:</strong> {userDetails.overallScore}</p>
-            <p><strong>Wins:</strong> {userDetails.totalWins}</p>
-            <p><strong>Losses:</strong> {userDetails.totalLoss}</p>
-            <p><strong>High Score:</strong> {userDetails.highScore}</p>
+            <h2 className="title">Profile Information</h2>
+            <br></br>
+            <p ><strong>Username: </strong> {userDetails.username}</p>
+            <p><strong>Account Created: </strong> {userDetails.accountCreated}</p>
+            <p><strong>Email: </strong> {userDetails.email}</p>
+            <p><strong>Overall Score: </strong> {userDetails.overallScore}</p>
+            <p><strong>Wins: </strong> {userDetails.totalWins}</p>
+            <p><strong>Losses: </strong> {userDetails.totalLoss}</p>
+            <p><strong>High Score: </strong> {userDetails.highScore}</p>
           </div>
         )}
       </div>
