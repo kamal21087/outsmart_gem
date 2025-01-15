@@ -1,16 +1,12 @@
 const findCloseEnough = (answer: string, sentence: string): boolean => {
-  
-    const sentenceWords = sentence.split(" ");
-  
-    // Check if any word in the sentence is close enough to the answer
-    for (const sentenceWord of sentenceWords) {
-        if (areStringsCloseEnough(answer, sentenceWord)) {
-          return true;
-        }
-      }
-  
-    return false;
-}
+  const answerWords = answer.split(" ");
+  const sentenceWords = sentence.split(" ");
+
+  // Check if every word in the answer is close enough to any word in the sentence
+  return answerWords.every((answerWord) =>
+    sentenceWords.some((sentenceWord) => areStringsCloseEnough(answerWord, sentenceWord))
+  );
+};
 
 // function to determine whether if two strings are close enough to be considered the same
 // This function is useful for comparing user input to a list of valid options
