@@ -8,10 +8,11 @@ export const GET_USER_DATA = gql`
       username
       email
       accountCreated
-      profileImage 
-      overallScore 
-      totalWins 
-      totalLoss 
+      profileImage
+      lastPlayed
+      overallScore
+      totalWins
+      totalLoss
       highScore
     }
   }
@@ -29,11 +30,23 @@ export const GET_LOGGED_IN_USERNAME = gql`
   }
 `;
 
-export const GET_USERNAME_AVATAR = gql`
-  query me {
-    me {
-      username
-      profileImage
+export const GET_USER_GAME_LOGS = gql`
+  query getUserGameLogs($playerId: ID!) {
+    getUserGameLogs(playerId: $playerId) {
+      _id
+      userQuestions
+      aiResponses
+      results
+      score
+      createdAt
+    }
+  }
+`;
+
+export const DELETE_GAME_LOG = gql`
+  mutation deleteGameLog($logId: ID!) {
+    deleteGameLog(logId: $logId) {
+      _id
     }
   }
 `;
