@@ -1,18 +1,29 @@
 import './Home.css'; // Custom styles for hover effects.
 import { useNavigate } from 'react-router-dom';
 import Auth from '../utils/auth'; // Authentication utility
+import { useState, useEffect } from 'react';
 
 const Home = () => {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
 
   // Function to handle game click
-  const handleGameClick = (gamePath: string) => {
-    if (Auth.loggedIn()) {
-      navigate(gamePath); // Navigate to the game if logged in
-    } else {
-      navigate('/login'); // Redirect to login if not logged in
-    }
-  };
+  const handleGameClick = (gamePath: string) => { 
+    if (Auth.loggedIn()) { 
+      if (gamePath === '/storyteller' || gamePath === '/identify-ai') { 
+        console.log('Showing modal for:', gamePath);
+        setShowModal(true); // Show modal for unavailable games 
+        } else { 
+          navigate(gamePath); 
+        } } else { 
+          navigate('/login'); 
+          } 
+      };
+
+  // Debugging log to check modal state 
+  useEffect(() => { 
+    console.log('Modal state:', showModal); 
+  }, [showModal]);
 
   return (
     <main>
@@ -50,6 +61,21 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Modal */} 
+      {showModal && (
+        <div className="modal is-active">
+          <div className="modal-background" onClick={() => setShowModal(false)}></div>
+          <div className="modal-content">
+            <div className="box">
+              <p className="modal-text">Game is coming soon!</p>
+              <button className="button is-primary" onClick={() => setShowModal(false)}>Close</button>
+            </div>
+          </div>
+          <button className="modal-close is-large" aria-label="close" onClick={() => setShowModal(false)}></button>
+        </div>
+        )}
+
     </main>
   );
 };
