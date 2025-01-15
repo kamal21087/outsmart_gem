@@ -1,6 +1,5 @@
 import { gql } from '@apollo/client';
 
-// Mutation for user login
 export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
@@ -13,7 +12,6 @@ export const LOGIN_USER = gql`
   }
 `;
 
-// Mutation for adding a new user
 export const ADD_USER = gql`
   mutation addUser($input: UserInput!) {
     addUser(input: $input) {
@@ -27,7 +25,6 @@ export const ADD_USER = gql`
   }
 `;
 
-// Mutation to update the profile image
 export const UPDATE_PROFILE_IMAGE = gql`
   mutation UpdateProfileImage($profileImage: String!) {
     updateProfileImage(profileImage: $profileImage) {
@@ -37,7 +34,6 @@ export const UPDATE_PROFILE_IMAGE = gql`
   }
 `;
 
-// Mutation to ask a question to Gemini AI
 export const ASK_GEMINI = gql`
   mutation askGemini($question: String!) {
     askGemini(question: $question)
@@ -54,6 +50,14 @@ export const ADD_GAMELOG = gql`
       score
       createdAt
       playerId
+    }
+  }
+`;
+
+export const DELETE_GAME_LOG = gql`
+  mutation deleteGameLog($logId: ID!) {
+    deleteGameLog(logId: $logId) {
+      _id
     }
   }
 `;

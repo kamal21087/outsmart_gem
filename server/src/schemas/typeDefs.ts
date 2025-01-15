@@ -12,27 +12,19 @@ const typeDefs = `#graphql
     totalWins: Int! 
     totalLoss: Int! 
     highScore: Int!
+    gameLogs: [Gamelog!] # Fetch game logs associated with the user
   }
 
   # Gamelog type representing a user's gameplay session
   type Gamelog {
     _id: ID!
-    userQuestions: [String]
-    aiResponses: [String]
+    userQuestions: [String!]!
+    aiResponses: [String!]!
     results: String!
     score: Int!
     createdAt: String! 
     playerId: ID!
   }
-  
-  # type UserProfile { 
-  # username: String!
-  # profileImage: String! 
-  # overallScore: Int! 
-  # totalWins: Int! 
-  # totalLoss: Int! 
-  # highScore: Int!
-  # }
 
   # Input type for creating a new user
   input UserInput {
@@ -43,10 +35,11 @@ const typeDefs = `#graphql
 
   # Input type for adding a gamelog
   input AddGamelogInput {
-    userQuestions: [String]
-    aiResponses: [String]
+    userQuestions: [String!]!
+    aiResponses: [String!]!
     results: String!
     score: Int!
+    playerId: ID! # Include the player ID for linkage
   }
 
   # Auth type for authentication responses
@@ -60,10 +53,10 @@ const typeDefs = `#graphql
     users: [User!]!
     user(username: String!): User
     me: User
-    # getUserProfile(username: String!): UserProfile
     getUserData(id: ID!): User
     getUserAvatar: String!
     getLoggedInUsername: String!
+    getUserGameLogs(playerId: ID!): [Gamelog!]! # Fetch all game logs for a specific user
   }
 
   # Root Mutation type

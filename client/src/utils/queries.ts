@@ -1,20 +1,5 @@
 import { gql } from '@apollo/client';
 
-// Define the GraphQL query to get the user profile
-// export const GET_USER_PROFILE = gql`
-//   query getUserProfile($id: ID!) {
-//     getUserProfile(id: $id) {
-//       username
-//       profileImage
-//       overallScore
-//       totalWins
-//       totalLoss
-//       highScore
-//     }
-//   }
-// `;
-
-// Define the GraphQL query to get the user data
 export const GET_USER_DATA = gql`
   query getUserData($id: ID!) {
     getUserData(id: $id) {
@@ -48,6 +33,18 @@ export const GET_USERNAME_AVATAR = gql`
     me {
       username
       profileImage
+    }
+  }
+`;
+export const GET_USER_GAME_LOGS = gql`
+  query getUserGameLogs($playerId: ID!) {
+    getUserGameLogs(playerId: $playerId) {
+      _id
+      userQuestions
+      aiResponses
+      results
+      score
+      createdAt
     }
   }
 `;

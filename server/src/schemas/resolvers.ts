@@ -29,7 +29,7 @@ interface LoginUserArgs {
   password: string;
 }
 
-// GraphQL resolvers for handling queries and mutations
+// GraphQL resolvers
 const resolvers = {
   Query: {
     me: async (_parent: any, _args: any, context: any) => {
@@ -42,14 +42,26 @@ const resolvers = {
     getUserData: async (_parent: any, { id }: any, context: any) => {
       if (context.user) {
         try {
-          // Fetch user data
           const userData = await User.findById(id);
           console.log('UserData:', userData); // Debug log
-
           return userData;
         } catch (error) {
-          console.error('Error fetching user data and profile:', error);
-          throw new Error('Error fetching user data and profile');
+          console.error('Error fetching user data:', error);
+          throw new Error('Error fetching user data');
+        }
+      }
+      throw new AuthenticationError('Could not authenticate user.');
+    },
+
+    getUserGameLogs: async (_parent: any, { playerId }: { playerId: string }, context: any) => {
+      if (context.user) {
+        try {
+          const gameLogs = await Gamelog.find({ playerId });
+          console.log(`Game logs for playerId ${playerId}:`, gameLogs);
+          return gameLogs;
+        } catch (error) {
+          console.error('Error fetching game logs:', error);
+          throw new Error('Error fetching game logs');
         }
       }
       throw new AuthenticationError('Could not authenticate user.');
@@ -71,7 +83,7 @@ const resolvers = {
           }
           return user.username;
         } catch (error) {
-          console.error('Error fetching logged-in user username:', error);
+          console.error('Error fetching username:', error);
           throw new Error('Error fetching username');
         }
       }
@@ -146,25 +158,20 @@ const resolvers = {
     addGamelog: async (_parent: any, { input }: AddGamelogArgs, context: any) => {
       if (context.user) {
         console.log('Context User:', context.user); // Debug log
-        //Create a new game log entry
         const gamedata = await Gamelog.create({
           ...input,
           playerId: context.user.id,
         });
 
         const { score, results } = input;
-        console.log(results);
-        
-        // Fetch user data to get the current high score 
-        const user = await User.findById(context.user.id); 
-        if (!user) 
-          { throw new Error('User not found'); 
-          }
-        
-          console.log('Current High Score:', user.highScore);
-        // Determine if the new score is higher than the current high score 
-        const newHighScore = score > user.highScore ? score : user.highScore; 
-        console.log('New High Score:', newHighScore);
+
+        // Fetch user data to get the current high score
+        const user = await User.findById(context.user.id);
+        if (!user) {
+          throw new Error('User not found');
+        }
+
+        const newHighScore = score > user.highScore ? score : user.highScore;
 
         const update = {
           $inc: {
@@ -174,8 +181,6 @@ const resolvers = {
           },
           highScore: newHighScore,
         };
-        console.log(update);
-        
 
         await User.findOneAndUpdate(
           { _id: context.user.id },
@@ -187,7 +192,7 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-    
+
     updateProfileImage: async (_: any, { profileImage }: { profileImage: string }, context: any) => {
       if (context.user) {
         console.log('Context User:', context.user); // Log the context user object
